@@ -1,0 +1,23 @@
+/*General*/
+body {
+	font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+	background: #E0F2F1;
+	margin: 0px;
+}
+
+
+/* Header And Footer */
+header, footer{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	background: #FFFF00;
+	box-shadow: 0 0 5px 5px hsla(0,0%,0%,.15);	
+}
+
+header{
+	top: 0px;
+}
+header h1{
+	margin: 10px;
+}

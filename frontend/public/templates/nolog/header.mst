@@ -1,0 +1,21 @@
+<header>
+	<div class="menubutton">
+		<div class="button_icon" id="open_menu"><img src="images/ic_menu_black_48dp.png" alt="menu"/></div>
+	</div>
+	<h1 class="link" id="home">mappic</h1>
+	<div id="logzone">
+		<div class="button_light">REGISTER</div>
+		<div class="button_raised">LOG IN</div>
+	</div>
+</header>
+
+<div id="menu">
+	<div class="menubutton">
+		<div class="button_icon" id="close_menu"><img src="images/ic_arrow_back_black_48dp.png" alt="close"/></div>
+	</div>
+	<ul>
+		<li class="link" id="about">About</li>
+		{{! <li class="link" id="news">News</li> }}
+	</ul>
+</div>
+

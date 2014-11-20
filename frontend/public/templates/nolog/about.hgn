@@ -1,0 +1,31 @@
+<div id="content" class="cropped">
+	<h1> About mappic </h1>
+
+	<h2> Why mappic ? </h2>
+	<p> mappic is our project for the Design of Dynamic Web Systems course at the Luleå University of Technology (LTU) in Sweden. We have chosen this project to meet the requirements</p>
+	
+	<h2> About technology</h2>
+	<p> This website is built in a different way that usual simple sites : the server is doing as less as possible (just storing the data) and most of the work is done in JavaScript on your computer. <br/>
+	Indeed, on the server two node.js application are running : the backend and the frontend. The backend represents what the server is doing : checking if users exists, storing and delivering pictures. In the other hand, the frontend is 'just' sending a html files and a lot of javascripts files. Then on the client computer, the pages are rendered, and the navigation is only done in javascript. <br/>
+	Thus our technologies :
+	<ul>
+		<li>Back-end</li>
+		<ul>
+			<li>Node.js</li>
+			<li>Text-based storage</li>
+		</ul>
+		<li>Front-end</li>
+		<ul>
+			<li>HTML+CSS</li>
+			<li>jQuery</li>
+			<li>jQuery adress, to easily go abck and forward in the history</li>
+			<li>mustache.js (a light template system)</li>
+		</ul>
+	</ul>
+	</p>
+
+	<h2> Who we are : Simon Le Guével & Arnaud Trouche</h2>
+	<p> We are two french students studying at LTU for the fall semester of 2014.  </p>
+
+	
+</div>

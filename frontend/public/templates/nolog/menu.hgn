@@ -1,0 +1,13 @@
+<div class="menubutton">
+	<div class="button_icon" id="close_menu"><img src="images/ic_arrow_back_black_48dp.png" alt="close"/></div>
+</div>
+<ul>
+	<li class="link" onclick="link('about');">About</li>
+	{{! <li class="link" id="news">News</li> }}
+	{{#register}}
+	<li class="link" onclick="link('register');">Register</li>
+	{{/register}}	
+	{{#login}}
+	<li class="link" onclick="link('login');">Log in</li>
+	{{/login}}
+</ul>

@@ -1,0 +1,16 @@
+<div id="content" class="croppedcropped">
+	<h1> Log in </h1>
+
+	<p> 
+		If you are a lucky person and have an account on mappic, you can log in here !
+	</p>
+
+	<form id="login" class="form">
+		<label>Pseudo</label>
+		<input type="text" name="name" id="name" /><br/>
+		<label>Password</label>
+		<input type="password" name="pwd" id="pwd" /><br/>
+		<input type="submit" class="button_raised"/>
+	</form>
+	
+</div>

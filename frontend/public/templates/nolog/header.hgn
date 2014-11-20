@@ -1,0 +1,15 @@
+<div class="menubutton">
+	<div class="button_icon" id="open_menu"><img src="images/ic_menu_black_48dp.png" alt="menu"/></div>
+</div>
+<h1 class="link" id="home" onclick="link('home');">mappic</h1>
+<div id="logzone">
+	{{#register}}
+	<div class="button_light  link" onclick="link('register');">REGISTER</div>
+	{{/register}}	
+	{{#login}}
+	<div class="button_raised link" onclick="link('login');">LOG IN</div>
+	{{/login}}
+</div>
+
+
+

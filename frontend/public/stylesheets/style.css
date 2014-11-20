@@ -15,6 +15,7 @@ body {
 	margin: 0;
 }
 .cropped{margin: auto;max-width: 800px;}
+.croppedcropped{margin: auto;max-width: 400px;}
 .left{float:left;}
 .right{float: right;}
 
@@ -26,6 +27,8 @@ body {
 	font-size: 14px;
 	cursor: pointer;
 	text-align: center;
+	border: none;
+	outline: none;
 }
 .button_light:hover{background: rgba(153,153,153,0.2);}
 .button_light:active{background: rgba(153,153,153,0.4);}
@@ -49,7 +52,7 @@ body {
 }
 
 .link{cursor: pointer;}
-.link:hover{
+li.link:hover{
 	text-shadow: 0 2px 5px hsla(0,0%,0%,.26);
 }
 
@@ -93,11 +96,12 @@ header h1{
 	width: 200px;
 	background: #FFF;
 	box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+	z-index: 10;
 }
 #menu ul{
 	position: absolute;
 	top: 80px;
-	left: 16px;
+	left: -16px; /* depends if we put icon, could be nice !*/
 	list-style-type: none;
 	padding-left: 56px;
 }
@@ -110,14 +114,98 @@ header h1{
 /* Content*/
 #content{
 	margin-top: 80px;
+	margin-bottom: 15px;
 	background: #FFF;
 	padding: 5px 20px;
 	font-size: 15px;
 	font-weight: normal;	
-	box-shadow: 0 0 5px 0 hsla(0,0%,0%,.15);
+	box-shadow: 0 0 1px 0 hsla(0,0%,0%,.15);
 }
 #content h1{
 	font-size: 45px;
 	font-weight: normal;
 	margin: 20px 0;
+	text-align: center;
+}
+
+
+/* Login */
+.form{
+	margin: 24px;
+	padding: 15px;
+	box-shadow: 0 0 5px 0 hsla(0,0%,0%,.15);
+
+}
+.form input[type="text"], 
+.form input[type="password"]{
+	margin-left: 27%;
+	width: 72%;
+	padding: 8px 0 8px 0;
+	position: relative;
+	top: -32px;
+	font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.form input[type="text"]:focus, 
+.form input[type="password"]:focus{
+	border-bottom: 3px solid #40C4FF;
+	outline: none;
+	padding-bottom: 6px;
+}
+.form input[type="text"].wrong, 
+.form input[type="password"].wrong{border-bottom: 3px solid #F44336;}
+.form input[type="text"]:focus.wrong, 
+.form input[type="password"]:focus.wrong{border-bottom: 3px solid #F44336;}
+.form label{
+	line-height: 30px;
+	color: rgba(0,0,0,0.54);
+	font-size: 11px;
+}
+.form input[type="submit"]{
+	margin: 0 110px;
+	width: 100px;
+}
+.form .form_infobox,
+.form .form_errorbox{
+	margin-left: 27%;
+	margin-bottom: -29px;
+	position: relative;
+	top: -28px;
+	font-size: 11px;
+}
+.form .form_infobox{color: rgba(0,0,0,0.54);}
+.form .form_errorbox{color: #F44336;}
+
+
+@media screen and (max-device-width: 500px) {
+	
+}
+
+@media screen and (max-device-width: 360px) {
+	.form{
+		margin: 0;
+		margin-top: 34px;
+		margin-bottom: 34px;
+		width: 90%;
+	}
+
+	.form input[type="text"], 
+	.form input[type="password"]{
+		width: 90%;
+		top: -5px;
+		margin-left: 10px;
+		margin-bottom: 15px;
+	}
+	.form input[type="submit"]{
+		margin: 15px 25%;
+		width: 49%;
+	}
+	.form .form_infobox,
+	.form .form_errorbox{
+		margin-left: 10px;
+		margin-bottom: -29px;
+		top: -18px;
+	}
 }

@@ -12,13 +12,13 @@
 		<li>Back-end</li>
 		<ul>
 			<li>Node.js</li>
-			<li>Text-based storage</li>
+			<li>MangoDB</li>
 		</ul>
 		<li>Front-end</li>
 		<ul>
 			<li>HTML+CSS</li>
 			<li>jQuery</li>
-			<li>jQuery adress, to easily go abck and forward in the history</li>
+			<li>jQuery adress, to easily go back and forward in the history</li>
 			<li>mustache.js (a light template system)</li>
 		</ul>
 	</ul>

@@ -2,36 +2,38 @@ var serverAddress = "http://localhost:3000";
 
 function loadContent(content, callback){
     var logged = localStorage.getItem("login");
-    var path = logged ? '/log/' : '/nolog/'; 
+    var path = '/nolog/'//logged ? '/log/' : '/nolog/'; 
 
     //Load the template for the current content
     $.get('templates'+path+content+'.hgn', function(template) {
         var rendered = Mustache.render(template, {});
         $('#page').html(rendered);
         $('#page').slideToggle('fast');
-        //Load the .js for the current content
+        //Load the .js for the current content 
         $.get('javascripts'+path+content+'.js', null);        
-    });  
+    }).fail(function() {
+        $.address.value('404');
+    })  
 
     callback();  
 }
 
 function loadHeaderMenu(data, callback){
     var logged = localStorage.getItem("login");
-    var path = logged ? '/log/' : '/nolog/';
+    var path = '/nolog/'//logged ? '/log/' : '/nolog/'; 
     var smallphone = $( window ).width() <= 360 ? true : false;
     var phone = $( window ).width() <= 500 && !smallphone ? true : false;
 
     //Display header
     $.get('templates'+path+"header.hgn", function(template){
-        $('header').html(Mustache.render(template, {username: localStorage.getItem('username'), register: !(smallphone||phone), login: !smallphone}));
+        $('header').html(Mustache.render(template, {username: localStorage.getItem('username'), snd_bttn: !(smallphone||phone), fst_bttn: !smallphone}));
         //load the header.js
         $.get('javascripts'+path+'header.js', null);
-    });   
+    });
 
     //Display menu
     $.get('templates'+path+"menu.hgn", function(template){
-        $('#menu').html(Mustache.render(template, {register: (smallphone||phone), login: smallphone}));
+        $('#menu').html(Mustache.render(template, {snd_bttn: (smallphone||phone), fst_bttn: smallphone}));
         //load the menu.js
         $.get('javascripts'+path+'menu.js', null);
     }); 
@@ -49,6 +51,7 @@ function link(link){
 }
 
 $( document ).ready(function() {
+    localStorage.setItem('login',false);
     loadHeaderMenu(null, function(){});
 
     $.address.change(function (event) {
@@ -140,7 +143,5 @@ function confPasswordCheck(event){
     else
         appendErrorbox($(this), 'Password confirmation does not match the password');
 }
-
-
 
 

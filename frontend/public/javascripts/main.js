@@ -1,8 +1,7 @@
-var serverAddress = "http://cloud-31.skelabb.ltu.se:3000";
+var serverAddress = $(location).attr('host') == 'localhost' ? "http://localhost:3000" : "http://cloud-31.skelabb.ltu.se:3000";
 
 var user = {
-	logged:true,
-    login:'arnaud'
+	logged:false,
 }
 
 function loadContent(content, callback){
@@ -51,8 +50,8 @@ function link(link){
 }
 
 $( document ).ready(function() {	
-	// userFromLocal = JSON.parse(localStorage.getItem("user"));
-	// if(userFromLocal != null) user = userFromLocal;
+	userFromLocal = JSON.parse(localStorage.getItem("user"));
+	if(userFromLocal != null) user = userFromLocal;
 	if($(location).attr('hash') == "" ){$.address.value('home');  console.info("home")} 
 
     loadHeaderMenu(null, function(){});
@@ -149,38 +148,38 @@ function confPasswordCheck(event){
 
 
 function API(url,data,callback) {
-		if (user.logged != true) {
-			alert("Not connected ?");
-			location="/";
-			return;
-		}
-		
-		if (data != null && data != undefined) {
-			var type="POST";
-		} else {
-			var type="GET";
-		}
-		
-		var ts=Date.now().toString();
-		var hash = CryptoJS.HmacSHA1(ts, user.passwordHash);
-		$.ajax({
-			url: serverAddress+"/api"+url,
-			type: type,
-			headers: {
-				"X-API-Login":user.login,
-				"X-API-Hash":hash,
-				"X-API-Time":ts,
-			}
-		}).done(function(ret) {
-			if (ret.success == false) {
-				alert("API error");
-				return;
-			}
-			
-			if (callback != undefined && callback != null) {
-				callback(ret);
-			}
-		});
+    if (user.logged != true) {
+        alert("Not connected ?");
+        location="/";
+        return;
+    }
+
+    if (data != null && data != undefined) {
+        var type="POST";
+    } else {
+        var type="GET";
+    }
+
+    var ts=Date.now().toString();
+    var hash = CryptoJS.HmacSHA1(ts, user.passwordHash);
+    $.ajax({
+        url: serverAddress+"/api"+url,
+        type: type,
+        headers: {
+            "X-API-Login":user.login,
+            "X-API-Hash":hash,
+            "X-API-Time":ts,
+        }
+    }).done(function(ret) {
+        if (ret.success == false) {
+            alert("API error");
+            return;
+        }
+
+        if (callback != undefined && callback != null) {
+            callback(ret);
+        }
+    });
 }
 
 function logout() {

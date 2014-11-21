@@ -5,4 +5,4 @@ app.set("view options", {layout: false});
 app.use("/",express.static(__dirname + '/public'));
 
 
-var server = app.listen(8000, null); 
+var server = app.listen(80, null); 

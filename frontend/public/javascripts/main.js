@@ -54,15 +54,10 @@ function link(link){
     }
 }
 
-$( document ).ready(function() {
-<<<<<<< HEAD
-    localStorage.setItem('login',false);
-=======
-	
+$( document ).ready(function() {	
 	userFromLocal = JSON.parse(localStorage.getItem("user"));
 	if(userFromLocal != null) user = userFromLocal;
 	
->>>>>>> 27c17a2ec385426c43d11d315bf07ec2cd46b95d
     loadHeaderMenu(null, function(){});
 
     $.address.change(function (event) {
@@ -156,8 +151,7 @@ function confPasswordCheck(event){
 }
 
 
-<<<<<<< HEAD
-=======
+
 function API(url,data,callback) {
 		if (user.logged != true) {
 			alert("Not connected ?");
@@ -204,4 +198,3 @@ function logout() {
 	link('home');
 }
 
->>>>>>> 27c17a2ec385426c43d11d315bf07ec2cd46b95d

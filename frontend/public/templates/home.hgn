@@ -1,0 +1,12 @@
+{{#logged}}
+<div id="content" class="map">
+{{/logged}}
+
+{{^logged}}
+<div id="content" class="cropped">
+	<h1> Welcome to mappic ! </h1>
+
+	<p> Mappic, the ultimate solution to remember where your pictures have been taken ! Indeed, you may not know that, but your phone is probably saving the places where your pictures have been taken and when you upload them on mappic, they appear on the map ! </p>
+{{/logged}}
+
+</div>

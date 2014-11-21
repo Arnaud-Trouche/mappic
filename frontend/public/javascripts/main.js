@@ -1,20 +1,18 @@
 var serverAddress = "http://cloud-31.skelabb.ltu.se:3000";
 
 var user = {
-	logged:false,
+	logged:true,
+    login:'arnaud'
 }
 
 function loadContent(content, callback){
-    var logged = localStorage.getItem("login");
-    var path = '/nolog/'//logged ? '/log/' : '/nolog/'; 
-
     //Load the template for the current content
-    $.get('templates'+path+content+'.hgn', function(template) {
-        var rendered = Mustache.render(template, {});
+    $.get('templates/'+content+'.hgn', function(template) {
+        var rendered = Mustache.render(template, {logged: user.logged,});
         $('#page').html(rendered);
         $('#page').slideToggle('fast');
         //Load the .js for the current content 
-        $.get('javascripts'+path+content+'.js', null);        
+        $.get('javascripts/pages/'+content+'.js', null);        
     }).fail(function() {
         $.address.value('404');
     })  
@@ -23,23 +21,21 @@ function loadContent(content, callback){
 }
 
 function loadHeaderMenu(data, callback){
-    var logged = localStorage.getItem("login");
-    var path = '/nolog/'//logged ? '/log/' : '/nolog/'; 
     var smallphone = $( window ).width() <= 360 ? true : false;
-    var phone = $( window ).width() <= 500 && !smallphone ? true : false;
+    var phone = $( window ).width() <= 750 && !smallphone ? true : false;
 
     //Display header
-    $.get('templates'+path+"header.hgn", function(template){
+    $.get('templates/header.hgn', function(template){
         $('header').html(Mustache.render(template, {logged: user.logged, login:user.login, snd_bttn: !(smallphone||phone), fst_bttn: !smallphone}));
-        //load the header.js
-        $.get('javascripts'+path+'header.js', null);
+        //load the header.js not used for the moment
+        //$.get('javascripts/pages/header.js', null);
     });
 
     //Display menu
-    $.get('templates'+path+"menu.hgn", function(template){
-        $('#menu').html(Mustache.render(template, {snd_bttn: (smallphone||phone), fst_bttn: smallphone}));
+    $.get('templates/menu.hgn', function(template){
+        $('#menu').html(Mustache.render(template, {logged: user.logged, login:user.login, snd_bttn: (smallphone||phone), fst_bttn: smallphone}));
         //load the menu.js
-        $.get('javascripts'+path+'menu.js', null);
+        $.get('javascripts/pages/menu.js', null);
     }); 
     if (callback != undefined) callback();
 }
@@ -55,15 +51,15 @@ function link(link){
 }
 
 $( document ).ready(function() {	
-	userFromLocal = JSON.parse(localStorage.getItem("user"));
-	if(userFromLocal != null) user = userFromLocal;
-	
+	// userFromLocal = JSON.parse(localStorage.getItem("user"));
+	// if(userFromLocal != null) user = userFromLocal;
+	if($(location).attr('hash') == "" ){$.address.value('home');  console.info("home")} 
+
     loadHeaderMenu(null, function(){});
 
     $.address.change(function (event) {
         $("#page").css('display', 'none');
-        var page = event.value == "/" ? 'home' : event.value.substring(1);
-        loadContent(page, function(){});
+        loadContent(event.value.substring(1), function(){});
     });
 
     $( window ).resize(function() {

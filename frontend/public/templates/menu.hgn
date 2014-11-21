@@ -3,10 +3,20 @@
 </div>
 <ul>
 	{{#snd_bttn}}
-	<li class="link" onclick="link('register');">Register</li>
+		{{#logged}}
+	<li class="link" onclick="link('profile');">Hello, {{login}}</div>
+		{{/logged}}
+		{{^logged}}
+	<li class="link" onclick="link('register');">Register</div>
+		{{/logged}}
 	{{/snd_bttn}}	
 	{{#fst_bttn}}
-	<li class="link" onclick="link('login');">Log in</li>
+		{{#logged}}
+	<li class="link" onclick="logout();">Log out</div>
+		{{/logged}}
+		{{^logged}}
+	<li class="link" onclick="link('login');">Log in</div>
+		{{/logged}}
 	{{/fst_bttn}}
 	{{#snd_bttn}}
 	<hr/>

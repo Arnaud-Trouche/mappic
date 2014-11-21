@@ -1,5 +1,9 @@
 var serverAddress = "http://localhost:3000";
 
+var user = {
+	logged:false,
+}
+
 function loadContent(content, callback){
     var logged = localStorage.getItem("login");
     var path = logged ? '/log/' : '/nolog/'; 
@@ -13,7 +17,7 @@ function loadContent(content, callback){
         $.get('javascripts'+path+content+'.js', null);        
     });  
 
-    callback();  
+    if (callback != undefined) callback();  
 }
 
 function loadHeaderMenu(data, callback){
@@ -24,7 +28,7 @@ function loadHeaderMenu(data, callback){
 
     //Display header
     $.get('templates'+path+"header.hgn", function(template){
-        $('header').html(Mustache.render(template, {username: localStorage.getItem('username'), register: !(smallphone||phone), login: !smallphone}));
+        $('header').html(Mustache.render(template, {logged: user.logged, login:user.login, dispRegister: !(smallphone||phone), dispLogin: !smallphone}));
         //load the header.js
         $.get('javascripts'+path+'header.js', null);
     });   
@@ -35,7 +39,7 @@ function loadHeaderMenu(data, callback){
         //load the menu.js
         $.get('javascripts'+path+'menu.js', null);
     }); 
-    callback();
+    if (callback != undefined) callback();
 }
 
 function link(link){
@@ -49,6 +53,10 @@ function link(link){
 }
 
 $( document ).ready(function() {
+	
+	userFromLocal = JSON.parse(localStorage.getItem("user"));
+	if(userFromLocal != null) user = userFromLocal;
+	
     loadHeaderMenu(null, function(){});
 
     $.address.change(function (event) {
@@ -142,5 +150,49 @@ function confPasswordCheck(event){
 }
 
 
+function API(url,data,callback) {
+		if (user.logged != true) {
+			alert("Not connected ?");
+			location="/";
+			return;
+		}
+		
+		if (data != null && data != undefined) {
+			var type="POST";
+		} else {
+			var type="GET";
+		}
+		
+		var ts=Date.now().toString();
+		var hash = CryptoJS.HmacSHA1(ts, user.passwordHash);
+		$.ajax({
+			url: serverAddress+"/api"+url,
+			type: type,
+			headers: {
+				"X-API-Login":user.login,
+				"X-API-Hash":hash,
+				"X-API-Time":ts,
+			}
+		}).done(function(ret) {
+			if (ret.success == false) {
+				alert("API error");
+				return;
+			}
+			
+			if (callback != undefined && callback != null) {
+				callback(ret);
+			}
+		});
+}
 
+function logout() {
+	user = {
+		logged:false
+	}
+	
+	localStorage.setItem("user",JSON.stringify(user));
+	
+	loadHeaderMenu();
+	link('home');
+}
 

@@ -3,12 +3,18 @@
 </div>
 <h1 class="link" id="home" onclick="link('home');">mappic</h1>
 <div id="logzone">
-	{{#register}}
+	{{#logged}}
+	<div class="button_light  link" onclick="link('profile');">Hello, {{login}}</div>
+	<div class="button_raised  link" onclick="logout();">LOG OUT</div>
+	{{/logged}}
+	{{^logged}}
+	{{#dispRegister}}
 	<div class="button_light  link" onclick="link('register');">REGISTER</div>
-	{{/register}}	
-	{{#login}}
+	{{/dispRegister}}	
+	{{#dispLogin}}
 	<div class="button_raised link" onclick="link('login');">LOG IN</div>
-	{{/login}}
+	{{/dispLogin}}
+	{{/logged}}
 </div>
 
 

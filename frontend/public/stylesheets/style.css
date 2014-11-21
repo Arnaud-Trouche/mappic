@@ -197,7 +197,14 @@ header h1{
 }
 .form .form_infobox{color: rgba(0,0,0,0.54);}
 .form .form_errorbox{color: #F44336;}
-
+.error {
+	margin:10px;
+	text-align:center;
+	background:#F44336;
+	color:#fff;
+	border-radius:3px;
+	padding:5px;
+}
 
 @media screen and (max-device-width: 500px) {
 	

@@ -11,6 +11,10 @@
 		<label>Password</label>
 		<input type="password" name="pwd" id="pwd" /><br/>
 		<input type="submit" class="button_raised"/>
+		
+		<div id="auth_failed" class="error"  style="display:none;">Authentication failed !</div>
 	</form>
+	
+	
 	
 </div>

@@ -1,4 +1,8 @@
-var serverAddress = "http://localhost:3000";
+var serverAddress = "http://cloud-31.skelabb.ltu.se:3000";
+
+var user = {
+	logged:false,
+}
 
 function loadContent(content, callback){
     var logged = localStorage.getItem("login");
@@ -15,7 +19,7 @@ function loadContent(content, callback){
         $.address.value('404');
     })  
 
-    callback();  
+    if (callback != undefined) callback();  
 }
 
 function loadHeaderMenu(data, callback){
@@ -26,7 +30,7 @@ function loadHeaderMenu(data, callback){
 
     //Display header
     $.get('templates'+path+"header.hgn", function(template){
-        $('header').html(Mustache.render(template, {username: localStorage.getItem('username'), snd_bttn: !(smallphone||phone), fst_bttn: !smallphone}));
+        $('header').html(Mustache.render(template, {logged: user.logged, login:user.login, snd_bttn: !(smallphone||phone), fst_bttn: !smallphone}));
         //load the header.js
         $.get('javascripts'+path+'header.js', null);
     });
@@ -37,7 +41,7 @@ function loadHeaderMenu(data, callback){
         //load the menu.js
         $.get('javascripts'+path+'menu.js', null);
     }); 
-    callback();
+    if (callback != undefined) callback();
 }
 
 function link(link){
@@ -51,7 +55,14 @@ function link(link){
 }
 
 $( document ).ready(function() {
+<<<<<<< HEAD
     localStorage.setItem('login',false);
+=======
+	
+	userFromLocal = JSON.parse(localStorage.getItem("user"));
+	if(userFromLocal != null) user = userFromLocal;
+	
+>>>>>>> 27c17a2ec385426c43d11d315bf07ec2cd46b95d
     loadHeaderMenu(null, function(){});
 
     $.address.change(function (event) {
@@ -145,3 +156,52 @@ function confPasswordCheck(event){
 }
 
 
+<<<<<<< HEAD
+=======
+function API(url,data,callback) {
+		if (user.logged != true) {
+			alert("Not connected ?");
+			location="/";
+			return;
+		}
+		
+		if (data != null && data != undefined) {
+			var type="POST";
+		} else {
+			var type="GET";
+		}
+		
+		var ts=Date.now().toString();
+		var hash = CryptoJS.HmacSHA1(ts, user.passwordHash);
+		$.ajax({
+			url: serverAddress+"/api"+url,
+			type: type,
+			headers: {
+				"X-API-Login":user.login,
+				"X-API-Hash":hash,
+				"X-API-Time":ts,
+			}
+		}).done(function(ret) {
+			if (ret.success == false) {
+				alert("API error");
+				return;
+			}
+			
+			if (callback != undefined && callback != null) {
+				callback(ret);
+			}
+		});
+}
+
+function logout() {
+	user = {
+		logged:false
+	}
+	
+	localStorage.setItem("user",JSON.stringify(user));
+	
+	loadHeaderMenu();
+	link('home');
+}
+
+>>>>>>> 27c17a2ec385426c43d11d315bf07ec2cd46b95d

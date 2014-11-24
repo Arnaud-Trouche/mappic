@@ -4,23 +4,29 @@
 <ul>
 	{{#snd_bttn}}
 		{{#logged}}
-	<li class="link" onclick="link('profile');">Hello, {{login}}</div>
+	<li class="link" onclick="link('profile');">Hello, {{login}}</li>
 		{{/logged}}
 		{{^logged}}
-	<li class="link" onclick="link('register');">Register</div>
+	<li class="link" onclick="link('register');">Register</li>
 		{{/logged}}
 	{{/snd_bttn}}	
 	{{#fst_bttn}}
 		{{#logged}}
-	<li class="link" onclick="logout();">Log out</div>
+	<li class="link" onclick="logout();">Log out</li>
 		{{/logged}}
 		{{^logged}}
-	<li class="link" onclick="link('login');">Log in</div>
+	<li class="link" onclick="link('login');">Log in</li>
 		{{/logged}}
 	{{/fst_bttn}}
 	{{#snd_bttn}}
 	<hr/>
 	{{/snd_bttn}}
+	
+	{{#logged}}
+	<li class="link" onclick="link('add_photo');">Add a photo</li>
+	<hr/>
+	{{/logged}}
+
 	<li class="link" onclick="link('about');">About</li>
 	<li class="link" onclick="link('news');">News</li>
 	

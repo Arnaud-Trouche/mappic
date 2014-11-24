@@ -1,5 +1,18 @@
+if(user.logged)
+	location="/";
+
 $('#register').on( "submit", function( event ) {
 	event.preventDefault();
+
+	//trigger the input to check and proceed if no errors
+	$('#name').trigger('focusout');
+	$('#mail').trigger('focusout');
+	$('#pwd').trigger('focusout');
+	$('#confirm_pwd').trigger('focusout');
+	if($('.form_errorbox').length != 0){
+		return;
+	}
+
 	var hash = CryptoJS.SHA1($('#pwd').val()).toString();
 	$.ajax({
 		url: serverAddress+"/api/user/",

@@ -1,0 +1,38 @@
+<div id="content" class="croppedcropped">
+	<h1> Upload one photo</h1>
+
+	<form id="upload_photo">
+		<label>Image</label>
+		<input type="file" name="file" id="file" />
+
+		<fieldset id="coordinates">
+			<legend>Add geolocalisation</legend>
+			<br/>
+			<input type="number" id="la_D" class="minimized" size="3" min="0" max="90" step="1" />°
+			<input type="number" id="la_M" class="minimized" size="3" min="0" max="60" step="1"/>'
+			<input type="number" id="la_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
+			<select name="N_S" class="maximized">
+				<option value="N">N</option>
+				<option value="S">S</option>
+			</select>
+			<br/><br/>
+
+			<input type="number" id="lo_D" class="minimized" size="3" min="0" max="180" step="1"/>°
+			<input type="number" id="lo_M" class="minimized" size="3" min="0" max="60" step="1"/>'
+			<input type="number" id="lo_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
+			<select name="W_E" class="maximized">
+				<option value="W">W</option>
+				<option value="E">E</option>
+			</select>
+			<br/><br/>
+
+			<div id="errorbox" class="errorbox">The underligned value(s) are incorrect</div>
+
+		</fieldset>
+
+		<input type="submit" class="button_raised"/>
+	</form>
+	
+	
+	
+</div>

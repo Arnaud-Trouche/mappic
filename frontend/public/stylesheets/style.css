@@ -45,6 +45,16 @@ body {
 	background: rgba(0,176,255,1);
 	box-shadow: 0 5px 10px hsla(0,0%,0%,.3);
 }
+.button_raised.disabled{
+	background: rgba(153,153,153,0.12);
+	color: rgba(153,153,153,0.26);
+	box-shadow: none;
+	cursor: default;
+}
+.button_raised.disabled:active{
+	background: rgba(153,153,153,0.12);
+	box-shadow: none;
+}
 .button_icon{
 	cursor: pointer;
 	height: 40px;
@@ -116,9 +126,9 @@ header h1{
 #menu hr{
 	width: 95%;
 	position: relative;
-	left: -25px;
+	left: -15px;
 	border: 1px solid rgba(0,0,0,0.12);
-	margin: 0px;
+	margin: 10px 0px;
 }
 
 
@@ -150,54 +160,77 @@ header h1{
 
 
 /* Login */
-.form{
+form{
 	margin: 24px;
 	padding: 15px;
 	box-shadow: 0 0 5px 0 hsla(0,0%,0%,.15);
 
 }
-.form input[type="text"], 
-.form input[type="password"]{
+form fieldset{
+	border: 1px solid rgba(0,0,0,0.12);
+	margin-bottom: 20px;
+}
+form input{
 	margin-left: 27%;
 	width: 72%;
 	padding: 8px 0 8px 0;
 	position: relative;
 	top: -32px;
-	font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+	font-family: 'Roboto', "Trebuchet MS", Helvetica, Arial, sans-serif;
 	font-size: 15px;
 	border: none;
 	border-bottom: 1px solid rgba(0,0,0,0.12);
 }
-.form input[type="text"]:focus, 
-.form input[type="password"]:focus{
+form input:focus{
 	border-bottom: 3px solid #40C4FF;
 	outline: none;
 	padding-bottom: 6px;
 }
-.form input[type="text"].wrong, 
-.form input[type="password"].wrong{border-bottom: 3px solid #F44336;}
-.form input[type="text"]:focus.wrong, 
-.form input[type="password"]:focus.wrong{border-bottom: 3px solid #F44336;}
-.form label{
+form input.wrong{border-bottom: 3px solid #F44336;}
+form input:focus.wrong{border-bottom: 3px solid #F44336;}
+form label{
 	line-height: 30px;
 	color: rgba(0,0,0,0.54);
 	font-size: 11px;
 }
-.form input[type="submit"]{
+form input[type="submit"]{
 	margin: 0 110px;
 	width: 100px;
+	top: 0;
 }
-.form .form_infobox,
-.form .form_errorbox{
+form input[type='submit']{border-bottom: none;padding-bottom: 8px;}
+form input[type="file"]{
+	margin-left: 19%;
+	width: 80%;
+	border: none;
+	font-size: 12px;
+}
+form input[type="file"]:focus{border:none;padding-bottom:8px;outline:inherit;}
+form input.minimized{	
+	margin-left: 12.5px;
+	width: 19%;
+	top:0;
+}
+form input.maximized{	
+	margin-left: 20%;
+	width: 79%;
+}
+form select.maximized {
+	margin-left: 12.5px;
+	font: normal 100 45px 'Roboto';
+}
+form .form_infobox,
+form .form_errorbox{
 	margin-left: 27%;
 	margin-bottom: -29px;
 	position: relative;
 	top: -28px;
 	font-size: 11px;
 }
-.form .form_infobox{color: rgba(0,0,0,0.54);}
-.form .form_errorbox{color: #F44336;}
-.error {
+form .form_infobox{color: rgba(0,0,0,0.54);}
+form .form_errorbox{color: #F44336;}
+.errorbox {
+	display:none;
 	margin:10px;
 	text-align:center;
 	background:#F44336;
@@ -208,37 +241,33 @@ header h1{
 
 @media screen and (max-device-width: 500px) {
 	#content{
-		/*position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;*/
 		margin: 0;
 		padding: 69px 20px 5px 20px;
 		height: 100%;
 	}
 }
 
-@media screen and (max-device-width: 360px) {
-	.form{
+@media screen and (max-device-width: 400px) {
+	#content h1{font-size: 35px;}
+	form{
 		margin: 0;
 		margin-top: 34px;
 		margin-bottom: 34px;
 		width: 90%;
 	}
 
-	.form input[type="text"], 
-	.form input[type="password"]{
+	form input{
 		width: 90%;
 		top: -5px;
 		margin-left: 10px;
 		margin-bottom: 15px;
 	}
-	.form input[type="submit"]{
+	form input[type="submit"]{
 		margin: 15px 25%;
 		width: 49%;
 	}
-	.form .form_infobox,
-	.form .form_errorbox{
+	form .form_infobox,
+	form .form_errorbox{
 		margin-left: 10px;
 		margin-bottom: -29px;
 		top: -18px;

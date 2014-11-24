@@ -1,5 +1,16 @@
+if(user.logged)
+	location="/";
+
 $('#login').on( "submit", function( event ) {
 	event.preventDefault();
+
+	//trigger the input to check and proceed if no errors
+	$('#name').trigger('focusout');
+	$('#pwd').trigger('focusout');
+	if($('.form_errorbox').length != 0){
+		return;
+	}
+
 	var login=$('#name').val();
 	var password=$('#pwd').val();
 	var ts=Date.now().toString();

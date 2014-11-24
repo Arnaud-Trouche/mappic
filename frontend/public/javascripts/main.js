@@ -1,5 +1,4 @@
-var serverAddress = $(location).attr('host') == 'localhost' ? "http://localhost:3000" : "http://cloud-31.skelabb.ltu.se:3000";
-
+var serverAddress = 'http://'+$(location).attr('host')+":3000";
 var user = {
 	logged:false,
 }
@@ -7,11 +6,11 @@ var user = {
 function loadContent(content, callback){
     //Load the template for the current content
     $.get('templates/'+content+'.hgn', function(template) {
-        var rendered = Mustache.render(template, {logged: user.logged,});
+        var rendered = Mustache.render(template, {logged: user.logged});
         $('#page').html(rendered);
         $('#page').slideToggle('fast');
         //Load the .js for the current content 
-        $.get('javascripts/pages/'+content+'.js', null);        
+        $.get('javascripts/pages/'+content+'.js', null);      
     }).fail(function() {
         $.address.value('404');
     })  
@@ -26,8 +25,6 @@ function loadHeaderMenu(data, callback){
     //Display header
     $.get('templates/header.hgn', function(template){
         $('header').html(Mustache.render(template, {logged: user.logged, login:user.login, snd_bttn: !(smallphone||phone), fst_bttn: !smallphone}));
-        //load the header.js not used for the moment
-        //$.get('javascripts/pages/header.js', null);
     });
 
     //Display menu
@@ -52,7 +49,8 @@ function link(link){
 $( document ).ready(function() {	
 	userFromLocal = JSON.parse(localStorage.getItem("user"));
 	if(userFromLocal != null) user = userFromLocal;
-	if($(location).attr('hash') == "" ){$.address.value('home');  console.info("home")} 
+
+	if($(location).attr('hash') == "" ){$.address.value('home');} 
 
     loadHeaderMenu(null, function(){});
 
@@ -64,6 +62,14 @@ $( document ).ready(function() {
     $( window ).resize(function() {
         loadHeaderMenu(null, function(){});
     });
+
+    $('body').hammer().bind("swiperight", function(ev) {
+        $('#open_menu').trigger('click');
+    });
+    $('body').hammer().bind("swipeleft", function(ev) {
+        $('#close_menu').trigger('click');
+    });
+
 });
 
 ////////////////////////////////////////////////////////////////////////// 
@@ -76,6 +82,10 @@ $( document ).ready(function() {
 function isAlphaNumeric(string){
     var patt = /^[a-z0-9]+$/i;
     return patt.test(string);
+}
+
+function isInRange(nb,min,max){
+    return ($.isNumeric(nb) && nb <= max && nb >= min);
 }
 
 function isEmail(string){
@@ -110,13 +120,15 @@ function removeErrorbox(elem){
 }
 
 function pseudoCheck(event){
-    if(!isAlphaNumeric(this.value))
-        appendErrorbox($(this), 'Pseudo must not contains special signs');   
-    else if(this.value.length ==0)
-        appendErrorbox($(this), 'Pseudo empty'); 
+    if(this.value.length ==0)
+        appendErrorbox($(this), 'Pseudo empty');    
+    else if(!isAlphaNumeric(this.value))
+        appendErrorbox($(this), 'Pseudo must not contains special signs');
     else if(this.value.length < 4)
         appendErrorbox($(this), 'Pseudo must be at least 4 caracters long');
-    else if(this.value.length >= 4)
+    else if(this.value.length > 12)
+        appendErrorbox($(this), 'Pseudo must be less than 12 caracters long');
+    else if(this.value.length >= 4 && this.value.length <= 12)
         removeErrorbox($(this));
 }
 
@@ -138,8 +150,10 @@ function passwordCheck(event){
         removeErrorbox($(this));
 }
 
-function confPasswordCheck(event){    
-    if($('#pwd').val() == this.value)
+function confPasswordCheck(event){  
+    if(this.value.length ==0)
+        appendErrorbox($(this), 'Password confirmation empty');  
+    else if($('#pwd').val() == this.value)
         removeErrorbox($(this));
     else
         appendErrorbox($(this), 'Password confirmation does not match the password');
@@ -190,6 +204,6 @@ function logout() {
 	localStorage.setItem("user",JSON.stringify(user));
 	
 	loadHeaderMenu();
-	link('home');
+	link('logout');
 }
 

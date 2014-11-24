@@ -8,22 +8,22 @@ router.get('/:userHash/:picId', function(req, res) {
 	userHash=req.params.userHash
 	picId=req.params.picId
 
-		if (fs.existsSync("data/"+userHash+"/pictures/"+picId)) {
-			var pic = 
-require("../data/"+userHash+"/pictures/"+picId+"/picture.json");
-			return res.send(pic);
-		} else {
-			return res.send({success:false});
-		}
+	if (fs.existsSync("data/"+userHash+"/pictures/"+picId)) {
+		var pic = 
+		require("../data/"+userHash+"/pictures/"+picId+"/picture.json");
+		return res.send(pic);
+	} else {
+		return res.send({success:false});
+	}
 
 });
 
 router.post('/:hash', function(req, res) {
 	userHash=req.params.hash
 
-		if (!fs.existsSync("data/"+userHash)) {
-			return res.send({success:false});
-		}
+	if (!fs.existsSync("data/"+userHash)) {
+		return res.send({success:false});
+	}
 
 	var id = crypto.randomBytes(20).toString('hex');
 
@@ -42,22 +42,22 @@ router.post('/:hash', function(req, res) {
 					if (error)
 						console.log('Error: '+error.message);
 					else
-					var pictureInfo = {
-						date:exifData.exif.DateTimeOriginal,
-						gps: {
-							longitude:exifData.gps.GPSLongitude,
-							longitudeRef:exifData.gps.GPSLongitudeRef,
-							latitude:exifData.gps.GPSLatitude,
-							latitudeRef:exifData.gps.GPSLatitudeRef,	
+						var pictureInfo = {
+							date:exifData.exif.DateTimeOriginal,
+							gps: {
+								longitude:exifData.gps.GPSLongitude,
+								longitudeRef:exifData.gps.GPSLongitudeRef,
+								latitude:exifData.gps.GPSLatitude,
+								latitudeRef:exifData.gps.GPSLatitudeRef,	
+							}
 						}
-					}
 
-					fs.writeFileSync("data/"+userHash+"/pictures/"+id+"/picture.json", JSON.stringify(pictureInfo), "utf8");
+						fs.writeFileSync("data/"+userHash+"/pictures/"+id+"/picture.json", JSON.stringify(pictureInfo), "utf8");
 
-					return res.send({success:true,id:id});
+						return res.send({success:true,id:id});
 
 
-				});
+					});
 			} catch (error) {
 				console.log('Error: ' + error.message);
 			}

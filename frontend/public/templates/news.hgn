@@ -1,0 +1,16 @@
+<div id="content" class="cropped">
+	<h1> News </h1>
+
+	<div>
+		<h2> <span class="date">24/11</span> First version online </h2> 
+		<p> Mappic is alive ! You can see the first look of mappic. All the 'not logged' part is achieve and we are now currently working on the main part of the application, where you are logged.</p>
+
+		<p>You can see on the picture what the application looks like for the moment : a big map in which we are going to add the pictures. Enjoy :)</p>
+
+		<div class="img_container">
+			<img src="images/news/1.png" alt="The interface of mappic" />
+		</div>
+		<br/>
+	</div>	
+	
+</div>

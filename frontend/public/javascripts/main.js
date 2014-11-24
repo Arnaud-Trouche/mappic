@@ -1,4 +1,4 @@
-var serverAddress = 'http://'+$(location).attr('host')+":443";
+var serverAddress = 'http://cloud-31.skelabb.ltu.se:443'; //'http://'+$(location).attr('host')+":443";
 var user = {
 	logged:false,
 }
@@ -69,6 +69,8 @@ $( document ).ready(function() {
     $('body').hammer().bind("swipeleft", function(ev) {
         $('#close_menu').trigger('click');
     });
+
+    initDialog();
 
 });
 
@@ -159,7 +161,41 @@ function confPasswordCheck(event){
         appendErrorbox($(this), 'Password confirmation does not match the password');
 }
 
+//Dialog
+var callback = function(){};
 
+function initDialog(){
+    $("#dialog span.button_light").click(function(event) {
+        closeDialog();
+    });
+    $("#blackout").click(function(event) {
+        closeDialog();
+    });
+}
+
+function openDialog(title,message,validation,clbck){
+    callback = clbck;
+    $("#dialog h1").html(title);
+    $("#dialog p").html(message);
+    $("#dialog .button_light").html(validation);
+    $("#blackout").css('height', ($( document ).innerHeight())+'px');
+    $("#blackout, #dialog").css({
+        display: 'block',
+        opacity: '0'
+    });
+    $("#blackout").animate({opacity: 0.55}, 'fast');
+    $("#dialog").animate({opacity:1}, 'fast');
+}
+
+function closeDialog(){
+    $("#blackout, #dialog").animate({opacity: 0}, 'fast', function(){
+        $("#blackout, #dialog").css('display', 'none');    
+        callback();
+        callback = function(){}; //if the function is called a second time, not 2 callbacks    
+    });
+}
+
+//API
 
 function API(url,data,callback) {
     if (user.logged != true) {

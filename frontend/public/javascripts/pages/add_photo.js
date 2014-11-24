@@ -5,9 +5,27 @@ $('#coordinates').css('display', 'none');
 
 $('#upload_photo').on( "submit", function( event ) {
 	event.preventDefault();
+	// $.ajax({
+	// 	url: serverAddress+"/api/pic/",
+	// 	type: "POST",
+	// 	data: {
+	// 		login: $('#name').val(),
+	// 		mail: $('#mail').val(),
+	// 		passwordHash: hash
+	// 	}
+	// }).done(function(ret) {
+	// 	if(ret.success)
+	// 		openDialog('Upload complete','The picture has been succesfully uploaded on mappic. You can now find it on the map !','OK', function() {
+	// 			link('home');
+	// 		})
+	// 	else
+	// 		openDialog('An error occured', 'We were unable to upload your picture. Please try again.', 'Try again', function(){})
+	// });
+
 });
 
-$('#file').change(function() {
+
+$('#file').change(function() {$
 	$(this).fileExif(function(exifObject) {
 		if(exifObject.GPSLatitude == undefined){
 			$('#coordinates').slideDown('fast');
@@ -21,11 +39,10 @@ $('#file').change(function() {
 			// $('#lo_S').val(exifObject.GPSLongitude[2]);
 			// $('#W_E').val(exifObject.GPSLongitudeRef).change();
 		}
-		console.log(exifObject);
 	});
 });
 
-var errors = [];
+	var errors = [];
 function addError(elem){
 	if(elem.hasClass('wrong'))
 		return;

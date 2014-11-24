@@ -14,6 +14,7 @@ body {
 	color: rgba(0,0,0,0.87);
 	background: rgba(0,0,0,0.06);
 	margin: 0;
+	min-width: 320px;
 }
 .cropped{margin: auto;max-width: 800px;}
 .croppedcropped{margin: auto;max-width: 400px;}
@@ -70,6 +71,8 @@ li.link:hover{
 }
 
 
+
+
 /* Header And Footer */
 header{
 	position: fixed;
@@ -110,7 +113,7 @@ header h1{
 	width: 200px;
 	background: #FFF;
 	box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-	z-index: 10;
+	z-index: 2;
 }
 #menu ul{
 	position: absolute;
@@ -143,7 +146,8 @@ header h1{
 	font-weight: normal;	
 	box-shadow: 0 0 1px 0 hsla(0,0%,0%,.15);
 }
-#content h1{
+#content h1,
+#dialog h1{
 	font-size: 45px;
 	font-weight: 100;
 	margin: 20px 0;
@@ -159,9 +163,9 @@ header h1{
 }
 
 
-/* Login */
+/* Forms */
 form{
-	margin: 24px;
+	margin-bottom: 24px;
 	padding: 15px;
 	box-shadow: 0 0 5px 0 hsla(0,0%,0%,.15);
 
@@ -169,6 +173,10 @@ form{
 form fieldset{
 	border: 1px solid rgba(0,0,0,0.12);
 	margin-bottom: 20px;
+}
+form fieldset p{
+	text-align: justify;
+	font-size: 13px;
 }
 form input{
 	margin-left: 27%;
@@ -239,6 +247,50 @@ form .form_errorbox{color: #F44336;}
 	padding:5px;
 }
 
+
+/* Dialogs */
+#dialog_container{
+	position: absolute;
+	top: 140px;
+	left:0;
+	right: 0;
+}
+#dialog{
+	display: none;	
+	position: relative;
+	max-width: 400px;
+	padding: 5px 20px 60px;
+	margin: auto;
+	z-index: 10;
+	background: #FFF;
+	box-shadow: 0 0 10px 2px hsla(0,0%,0%,.4);
+}
+#dialog .button_light{
+	position: absolute;
+	right: 15px;
+}
+#blackout{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.55);
+	z-index: 5;
+}
+
+
+/* News */
+#content div.img_container img{
+	max-width: 80%;
+	margin: 5px;	
+	box-shadow: 0 0 6px 1px hsla(0,0%,0%,.15);
+}
+#content div.img_container{text-align: center;}
+.date{font-weight: 100; font-size: 250%;}
+
+
 @media screen and (max-device-width: 500px) {
 	#content{
 		margin: 0;
@@ -248,7 +300,7 @@ form .form_errorbox{color: #F44336;}
 }
 
 @media screen and (max-device-width: 400px) {
-	#content h1{font-size: 35px;}
+	#content h1, #dialog h1{font-size: 35px;}
 	form{
 		margin: 0;
 		margin-top: 34px;
@@ -271,5 +323,9 @@ form .form_errorbox{color: #F44336;}
 		margin-left: 10px;
 		margin-bottom: -29px;
 		top: -18px;
+	}
+
+	#dialog_container{
+		top: 100px;
 	}
 }

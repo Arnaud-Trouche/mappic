@@ -1,4 +1,4 @@
-var serverAddress = 'http://'+$(location).attr('host')+":3000";
+var serverAddress = 'http://'+$(location).attr('host')+":443";
 var user = {
 	logged:false,
 }

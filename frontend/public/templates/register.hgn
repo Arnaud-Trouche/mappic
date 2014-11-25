@@ -1,12 +1,12 @@
 <div id="content" class="croppedcropped">
 	<h1> Register</h1>
 
-	{{! <p> 
+	<p> 
 		Mappic is still in its early phase of development, so you cannot register <br/>
 		We are hoping to see you again soon when the site will open fully :)
-	</p> }}
+	</p>
 	
-	<form id="register" class="form">
+	{{! <form id="register" class="form">
 		<label>Pseudo</label>
 		<input type="text" name="name" id="name" /><br/>
 
@@ -17,6 +17,6 @@
 		<label>Confirmation</label>
 		<input type="password" name="confirm_pwd" id="confirm_pwd" /><br/>
 		<input type="submit" class="button_raised"/>
-	</form>
+	</form> }}
 
 </div>

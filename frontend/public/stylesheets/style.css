@@ -239,13 +239,18 @@ form .form_errorbox{
 form .form_infobox{color: rgba(0,0,0,0.54);}
 form .form_errorbox{color: #F44336;}
 .errorbox {
-	display:none;
-	margin:10px;
-	text-align:center;
-	background:#F44336;
-	color:#fff;
-	border-radius:3px;
-	padding:5px;
+	display: none;
+	margin: 10px;
+	text-align: center;
+	background: #F44336;
+	color: #FFFFFF;
+	border-radius: 3px;
+	padding: 5px;
+}
+#preview_img{
+	display: none;
+	margin: -10px auto 10px;
+	box-shadow: 0 0 5px 0px hsla(0,0%,0%,.35);
 }
 
 
@@ -291,6 +296,8 @@ form .form_errorbox{color: #F44336;}
 #content div.img_container{text-align: center;}
 .date{font-weight: 100; font-size: 250%;}
 
+
+/* Map */
 .mapImg {
 	width:300px;
 }

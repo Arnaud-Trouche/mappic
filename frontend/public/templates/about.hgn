@@ -6,22 +6,26 @@
 	
 	<h2> About technology</h2>
 	<p> This website is built in a different way that usual simple sites : the server is doing as less as possible (just storing the data) and most of the work is done in JavaScript on your computer. <br/>
-	Indeed, on the server two node.js application are running : the backend and the frontend. The backend represents what the server is doing : checking if users exists, storing and delivering pictures. In the other hand, the frontend is 'just' sending a html files and a lot of javascripts files. Then on the client computer, the pages are rendered, and the navigation is only done in javascript. <br/>
-	Thus our technologies :
-	<ul>
-		<li>Back-end</li>
+		Indeed, on the server two node.js application are running : the backend and the frontend. The backend represents what the server is doing : checking if users exists, storing and delivering pictures. In the other hand, the frontend is 'just' sending a html files and a lot of javascripts files. Then on the client computer, the pages are rendered, and the navigation is only done in javascript. <br/>
+		Thus our technologies :
 		<ul>
-			<li>Node.js</li>
-			<li>MangoDB</li>
+			<li>Back-end</li>
+			<ul>
+				<li>Node.js</li>
+				<li>MangoDB</li>
+			</ul>
+			<li>Front-end</li>
+			<ul>
+				<li>HTML+CSS</li>
+				<li>jQuery and some plugins:</li>
+				<ul>
+					<li>jQuery address, to easily go back and forward in the history</li>
+					<li>jQuery EXIF, to extract informations from the pictures</li>
+					<li>jQuery Hammer, to detect mobile gestures</li>
+				</ul>
+				<li>mustache.js, a light template system</li>
+			</ul>
 		</ul>
-		<li>Front-end</li>
-		<ul>
-			<li>HTML+CSS</li>
-			<li>jQuery</li>
-			<li>jQuery adress, to easily go back and forward in the history</li>
-			<li>mustache.js (a light template system)</li>
-		</ul>
-	</ul>
 	</p>
 
 	<h2> Who we are : Simon Le Guével & Arnaud Trouche</h2>

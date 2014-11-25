@@ -2,7 +2,17 @@
 	<h1> News </h1>
 
 	<div>
-		<h2> <span class="date">24/11</span> First version online </h2> 
+		<h2> <span class="date">25/11</span> First photo uploaded </h2> 
+		<p> Today we have uploaded the first photo on mappic ! The way the pictures appear on the map may not but the definite one. You can also see on the picture what the application is looking like on mobile phones (here on Android 5.0).</p>
+
+		<div class="img_container">
+			<img src="images/news/2.png" alt="Mobile mappic with a picture" width="50%"/>
+		</div>
+		<br/>
+	</div>	
+
+	<div>
+		<h2> <span class="date">23/11</span> First version online </h2> 
 		<p> Mappic is alive ! You can see the first look of mappic. All the 'not logged' part is achieve and we are now currently working on the main part of the application, where you are logged.</p>
 
 		<p>You can see on the picture what the application looks like for the moment : a big map in which we are going to add the pictures. Enjoy :)</p>

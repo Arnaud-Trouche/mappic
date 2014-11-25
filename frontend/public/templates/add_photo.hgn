@@ -5,7 +5,7 @@
 		<label>Image</label>
 		<input type="file" name="file" id="file" />
 
-		<img src="#" id="preview_img" style="display:none;margin:10px auto;box-shadow:0 0 3px #000;" />
+		<img src="#" id="preview_img" />
 		<br />
 
 		<fieldset id="coordinates" style="display:none">

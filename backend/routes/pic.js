@@ -5,7 +5,6 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var db = require('./db.js');
 var fct = require("./functions.js");
-var atob = require('atob')
 
 router.get('/', function(req, res) {
 	login=req.get("X-API-Login");

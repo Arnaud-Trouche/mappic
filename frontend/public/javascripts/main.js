@@ -1,4 +1,6 @@
-var serverAddress = 'http://cloud-31.skelabb.ltu.se:443'; //'http://'+$(location).attr('host')+":443";
+//var serverAddress = 'http://'+$(location).attr('host')+":443";
+var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
+
 var user = {
 	logged:false,
 }
@@ -215,6 +217,7 @@ function API(url,data,callback) {
     $.ajax({
         url: serverAddress+"/api"+url,
         type: type,
+        data:data,
         headers: {
             "X-API-Login":user.login,
             "X-API-Hash":hash,

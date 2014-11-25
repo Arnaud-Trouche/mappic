@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var pictureSchema = new mongoose.Schema({
 	hash: String,
-	date: Date,
+	date: String,
 	gps: {
 		latitude: Number,
 		latitudeRef: String,
@@ -20,6 +20,7 @@ var userSchema = new mongoose.Schema({
 });
 
 var User = mongoose.model('users', userSchema);
+var Picture = mongoose.model('pictures', pictureSchema);
 if (User == undefined) console.log("ERROR");
 //console.log(User);
-module.exports = User;
+module.exports = {User:User,Picture:Picture};

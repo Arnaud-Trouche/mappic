@@ -202,7 +202,8 @@ form label{
 	font-size: 11px;
 }
 form input[type="submit"]{
-	margin: 0 110px;
+	display:block;
+	margin: 0 auto;
 	width: 100px;
 	top: 0;
 }
@@ -289,6 +290,10 @@ form .form_errorbox{color: #F44336;}
 }
 #content div.img_container{text-align: center;}
 .date{font-weight: 100; font-size: 250%;}
+
+.mapImg {
+	width:300px;
+}
 
 
 @media screen and (max-device-width: 500px) {

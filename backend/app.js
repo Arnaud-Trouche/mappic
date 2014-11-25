@@ -17,7 +17,8 @@ app.use(function(req, res, next) {
 
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
+  limit:'50mb'
 })); 
 app.use(bodyParser.json());
 app.use(busboy()); // File uploads
@@ -29,6 +30,8 @@ var pic = require('./routes/pic');
 
 app.use('/api/user', user);
 app.use('/api/pic', pic);
+
+app.use('/data',express.static(__dirname + '/data/'));
 
 var server = app.listen(443, function () {
 

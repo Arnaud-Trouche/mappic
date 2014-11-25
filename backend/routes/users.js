@@ -8,7 +8,7 @@ var crypto = require('crypto');
 
 router.get('/login', function(req, res) {
 	login=req.get("X-API-Login");
-	db.findOne({login:login}, function(err,user) {
+	db.User.findOne({login:login}, function(err,user) {
 		if (!user) {
 			return res.send({success:false});
 		} else {
@@ -25,7 +25,7 @@ router.get('/login', function(req, res) {
 
 router.get('/', function(req, res) {
 	login=req.get("X-API-Login");
-	db.findOne({login:login}, function(err,user) {
+	db.User.findOne({login:login}, function(err,user) {
 		if (!user) {
 			return res.send({success:false});
 		} else {
@@ -78,12 +78,12 @@ router.get('/login2', function(req, res) {
 
 router.post('/', function(req, res) {
 	login=req.body.login
-	db.findOne({login:login}, function(err,ret) {
+	db.User.findOne({login:login}, function(err,ret) {
 		if (ret) {
 			return res.send({success:false});
 		} else {
 			
-			user = new db({
+			user = new db.User({
 				login: login,
 				passwordHash: req.body.passwordHash,
 				mail: req.body.mail,

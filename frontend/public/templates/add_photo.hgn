@@ -1,27 +1,30 @@
 <div id="content" class="croppedcropped">
 	<h1> Upload one photo</h1>
 
-	<form id="upload_photo">
+	<form id="upload_photo" enctype="multipart/form-data">
 		<label>Image</label>
 		<input type="file" name="file" id="file" />
+
+		<img src="#" id="preview_img" style="display:none;margin:10px auto;box-shadow:0 0 3px #000;" />
+		<br />
 
 		<fieldset id="coordinates" style="display:none">
 			<legend>Add geolocalisation</legend>
 			<p>Your picture does not have geolocalisation data so you need to insert the coordinates where the picture have been taken</p>
 			
-			<input type="number" id="la_D" class="minimized" size="3" min="0" max="90" step="1" />°
-			<input type="number" id="la_M" class="minimized" size="3" min="0" max="60" step="1"/>'
-			<input type="number" id="la_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
-			<select name="N_S" class="maximized">
+			<input type="number" id="la_D" name="la_D" class="minimized" size="3" min="0" max="90" step="1" />°
+			<input type="number" id="la_M" name="la_M" class="minimized" size="3" min="0" max="60" step="1"/>'
+			<input type="number" id="la_S" name="la_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
+			<select id="N_S" class="maximized">
 				<option value="N">N</option>
 				<option value="S">S</option>
 			</select>
 			<br/><br/>
 
-			<input type="number" id="lo_D" class="minimized" size="3" min="0" max="180" step="1"/>°
-			<input type="number" id="lo_M" class="minimized" size="3" min="0" max="60" step="1"/>'
-			<input type="number" id="lo_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
-			<select name="W_E" class="maximized">
+			<input type="number" id="lo_D" name="lo_D" class="minimized" size="3" min="0" max="180" step="1"/>°
+			<input type="number" id="lo_M" name="lo_M" class="minimized" size="3" min="0" max="60" step="1"/>'
+			<input type="number" id="lo_S" name="lo_S" class="minimized" size="3" min="0" max="60" step="0.01"/>" 
+			<select id="W_E" class="maximized">
 				<option value="W">W</option>
 				<option value="E">E</option>
 			</select>
@@ -31,7 +34,7 @@
 
 		</fieldset>
 
-		<input type="submit" class="button_raised"/>
+		<input type="submit" class="button_raised" style=""/>
 	</form>
 	
 	

@@ -36,18 +36,14 @@ router.post('/', function(req, res) {
 				
 				fs.writeFileSync("data/"+id+".jpg", new Buffer(req.body.picture, "base64"));
 				
-				var lat=Number(req.body.gps.la_D)+Number(req.body.gps.la_M)/60+Number(req.body.gps.la_S)/3600;
-				var lon=Number(req.body.gps.lo_D)+Number(req.body.gps.lo_M)/60+Number(req.body.gps.lo_S)/3600;
+				
 
 				pic = new db.Picture({
 					hash:id,
 					date:req.body.date,
 					gps: {
-						latitude:lat,
-						longitude:lon,
-						latitudeRef:req.body.gps.N_S,
-						//longitudeRef:req.body.gps.W_E,
-						longitudeRef:'E',
+						latitude:req.body.gps.latitude,
+						longitude:req.body.gps.longitude,
 					}
 				});
 				

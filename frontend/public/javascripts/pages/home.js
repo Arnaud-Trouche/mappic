@@ -42,6 +42,10 @@ $(document).ready(function($) {
 				
 			}
 			
+			
+			var markerCluster = new MarkerClusterer(map, markers);
+
+			
 			// Center and extend the map to see all the markers
 			var bounds = new google.maps.LatLngBounds();
 			$.each(markers, function (index, marker) {

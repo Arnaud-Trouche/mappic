@@ -32,40 +32,39 @@ $('#upload_photo').on( "submit", function( event ) {
 
 $('#file').change(function() {
 	if ($(this)[0].files && $(this)[0].files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-		var data = e.target.result;
-		currentPicture.picture=data.replace("data:image/jpeg;base64,","");
-		$('#preview_img')
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			var data = e.target.result;
+			currentPicture.picture=data.replace("data:image/jpeg;base64,","");
+			$('#preview_img')
 			.attr('src', e.target.result)
 			.height(200)
 			.show('',function() { $('#preview_img').css('display','block'); });
-    };
-    reader.readAsDataURL($(this)[0].files[0]);
-	}
-	$(this).fileExif(function(exifObject) {
-		currentPicture.date=exifObject.DateTimeOriginal;
-		if(exifObject.GPSLatitude == undefined){
-			$('#coordinates').slideDown('fast');
-			$('#locPicker').locationpicker({
-				location: {latitude: 48.028184, longitude:  1.884350},	
-				radius: 300,
-				zoom:3,
-				onchanged: function(currentLocation, radius, isMarkerDropped) {
-					currentPicture.gps.latitude=currentLocation.latitude;
-					currentPicture.gps.longitude=currentLocation.longitude;
+
+			EXIF.getData(document.getElementById("preview_img"), function() {
+				currentPicture.date= EXIF.getTag(this, "DateTimeOriginal");
+				var latArr = EXIF.getTag(this, "GPSLatitude")
+				var lonArr = EXIF.getTag(this, "GPSLongitude")
+				if(latArr == undefined){
+					$('#coordinates').slideDown('fast');
+					$('#locPicker').locationpicker({
+						location: {latitude: 48.028184, longitude:  1.884350},	
+						radius: 300,
+						zoom:3,
+						onchanged: function(currentLocation, radius, isMarkerDropped) {
+							currentPicture.gps.latitude=currentLocation.latitude;
+							currentPicture.gps.longitude=currentLocation.longitude;
+						}
+					});	
+				}else{
+					$('#coordinates').slideUp('fast');
+					currentPicture.gps.latitude=Number(latArr[0])+Number(latArr[1])/60+Number(latArr[2])/3600;
+					currentPicture.gps.longitude=Number(lonArr[0])+Number(lonArr[1])/60+Number(lonArr[2])/3600;
 				}
-			});				
-		
-		}else{
-			$('#coordinates').slideUp('fast');
-			var lat=Number(exifObject.GPSLatitude[0])+Number(exifObject.GPSLatitude[1])/60+Number(exifObject.GPSLatitude[2])/3600;
-			var lon=Number(exifObject.GPSLongitude[0])+Number(exifObject.GPSLongitude[0])/60+Number(exifObject.GPSLongitude[2])/3600;
-			
-			currentPicture.gps.latitude=lat;
-			currentPicture.gps.longitude=lon;
-		}
-	});
+			});
+		};
+		reader.readAsDataURL($(this)[0].files[0]);
+	}
 });
 
 	var errors = [];

@@ -1,5 +1,5 @@
 <div id="content" class="cropped">
-	<h1> Upload one photo</h1>
+	<h1> Upload one picture</h1>
 
 	<form id="upload_photo" enctype="multipart/form-data">
 		<label>Image</label>

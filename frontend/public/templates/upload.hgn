@@ -1,0 +1,13 @@
+<div id="content" class="cropped">
+	<h1> Upload photos</h1>
+
+	<form id="upload_pictures" enctype="multipart/form-data">
+		<div id="drop">
+			<p id="tip">Drop Here (one file at the same time only :/)</p>
+		</div>
+		<input type="submit" class="button_raised" style="display:none;"/> 
+	</form>
+	
+	
+	
+</div>

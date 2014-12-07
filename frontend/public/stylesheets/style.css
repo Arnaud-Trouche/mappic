@@ -16,8 +16,8 @@ body {
 	margin: 0;
 	min-width: 320px;
 }
-.cropped{margin: auto;max-width: 800px;}
-.croppedcropped{margin: auto;max-width: 400px;}
+.cropped{max-width: 800px;}
+.croppedcropped{max-width: 400px;}
 .left{float:left;}
 .right{float: right;}
 
@@ -59,6 +59,7 @@ body {
 .button_icon{
 	cursor: pointer;
 	height: 40px;
+	margin-right: 15px;
 }
 .button_icon img{
 	width: inherit;
@@ -103,6 +104,7 @@ header h1{
 	position: absolute;
 	top: 12px;
 	left: 16px;
+	display: flex;
 }
 
 #menu{
@@ -138,8 +140,7 @@ header h1{
 
 /* Content*/
 #content{
-	margin-top: 80px;
-	margin-bottom: 15px;
+	margin: 80px auto 15px;
 	background: #FFF;
 	padding: 5px 20px;
 	font-size: 15px;
@@ -253,13 +254,46 @@ form .form_errorbox{color: #F44336;}
 	box-shadow: 0 0 5px 0px hsla(0,0%,0%,.35);
 }
 
+#drop{
+	background: #FFFDE7;
+	box-shadow: 0 0 15px 0px hsla(0,0%,0%,.1) inset;
+	min-height: 200px;
+	padding: 5px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 15px;
+}
+#drop.dragover{box-shadow: 0 0 15px 0px hsla(0,0%,0%,.5) inset;}
+#drop p{text-align: center;width: 100%;}
+.preview_drop{
+	background: #FFF;
+	margin: 10px;
+	padding: 5px;
+	box-shadow: 0 0 5px 0px rgba(0,0,0,.15);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.preview_drop p{
+	padding: 2px 0;
+	font-size: 0.8em;
+}
+.preview_drop p, .preview_drop .button_raised{
+	margin-top: auto;
+	margin-bottom: auto;
+}
 
 /* Dialogs */
 #dialog_container{
-	position: absolute;
+	position: fixed;
 	top: 140px;
 	left:0;
 	right: 0;
+	z-index: 10;
 }
 #dialog{
 	display: none;	

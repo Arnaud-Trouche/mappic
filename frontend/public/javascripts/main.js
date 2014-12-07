@@ -1,5 +1,5 @@
-var serverAddress = 'http://'+$(location).attr('host')+":443";
-//var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
+//var serverAddress = 'http://'+$(location).attr('host')+":443";
+var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
 
 var user = {
 	logged:false,
@@ -163,7 +163,7 @@ function confPasswordCheck(event){
         appendErrorbox($(this), 'Password confirmation does not match the password');
 }
 
-//Dialog
+// DIALOG
 var callback = function(){};
 
 function initDialog(){
@@ -185,6 +185,8 @@ function openDialog(title,message,validation,clbck){
         display: 'block',
         opacity: '0'
     });
+    var pixels = Math.round(($( window ).innerHeight()-$('#dialog_container').innerHeight())/2)+'px';
+    $('#dialog_container').css('top', pixels);
     $("#blackout").animate({opacity: 0.55}, 'fast');
     $("#dialog").animate({opacity:1}, 'fast');
 }

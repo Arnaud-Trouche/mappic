@@ -25,11 +25,12 @@ $(document).ready(function($) {
 				
 				contentString = "<img class='mapImg' src='"+serverAddress+"/data/"+data.pictures[i].hash+".jpg' />";
 
-
+				var image = serverAddress+"/data/"+data.pictures[i].hash+".jpg";
 				markers[i] = new google.maps.Marker({
 					position: new google.maps.LatLng(data.pictures[i].gps.latitude, data.pictures[i].gps.longitude),
 					map: map,
 					title: '',
+					//icon: image,
 					content:contentString,
 				});
 				

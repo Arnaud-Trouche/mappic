@@ -20,9 +20,9 @@
 				<li>jQuery and some plugins:</li>
 				<ul>
 					<li>jQuery address, to easily go back and forward in the history</li>
-					<li>jQuery EXIF, to extract informations from the pictures</li>
 					<li>jQuery Hammer, to detect mobile gestures</li>
 				</ul>
+				<li>EXIF.js, to extract informations from the pictures</li>
 				<li>mustache.js, a light template system</li>
 			</ul>
 		</ul>

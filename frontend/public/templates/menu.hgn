@@ -23,10 +23,10 @@
 	{{/snd_bttn}}
 	
 	{{#logged}}
-		<!--{{#snd_bttn}}
-	<li class="link" onclick="link('upload');">Upload pictures</li>
-		{{/snd_bttn}}-->
+		{{#snd_bttn}}
 	<li class="link" onclick="link('add_picture');">Add a picture</li>
+		{{/snd_bttn}}
+	<li class="link" onclick="link('pictures');">Pictures</li>
 	<hr/>
 	{{/logged}}
 

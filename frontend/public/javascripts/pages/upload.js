@@ -24,27 +24,6 @@ $(document).on('dragleave', '#drop', function(e) {
 	return false;
 });
 
-function addPreview(src, id){
-	$('#drop').append('<div class="preview_drop"><img src="'+src+'" height="200" id="prev_pic_'+id+'"/><p></p></div>')
-	photoAdded();
-}
-
-function addCityToPreview(id, lat, lon){
-	$.ajax({
-		url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon,
-		type: "GET"
-	}).done(function(ret) {	
-		var width = $("#prev_pic_"+id).width();
-		if (ret.status == "OK") {
-			var indice = ret.results.length - 4;
-			var city = ret.results[indice].formatted_address;
-			$('#prev_pic_'+id).parent().children("p").html(city).css('width',width+'px');
-		}else{
-			$("#prev_pic_"+id).parent().children("p").html('<div class="button_raised link needgeolocalisation" onclick="openMap('+id+')">ADD GPS DATA</div>').css('width',width+'px');
-		}
-	});
-}
-
 function photoAdded(){
 	if($(".preview_drop").length !=0){
 		$('#tip').css('display', 'none');
@@ -58,24 +37,46 @@ function maximizeDropZone(){
 	$("#content").animate({'max-width': '25000px'}, 400);
 }
 
+function deletePhoto(src, id){
+	//Remove from JS
+	if(id == nbPhotos-1)
+		nbPhotos--;
+	else{
+		nbPhotos--;
+		for(i = id; i<nbPhotos-1; i++){
+			pictures[i] = pictures[i+1];
+		}
+	}
+
+	//Remove from page
+	$('#preview_drop_'+id).hide(400, function(){
+		$('#preview_drop_'+id).remove();		
+	});
+}
 
 //Add geolocalisation
 function openMap(id){
 	openDialog('Add GPS data', '<p>Your picture does not have geolocalisation data so you need to tell us where the picture have been taken</p><div id="locPicker" style="width:100%;height:250px;"></div>', 'Done', function(){});
+	var lat = $('#lat_'+id).val() == 'undefined' ? 45.00 : $('#lat_'+id).val();
+	var lon = $('#lon_'+id).val() == 'undefined' ? -5.00 : $('#lon_'+id).val();
+	var zoom = $('#lon_'+id).val() == 'undefined' ? 3 : 7;
+
 	$('#locPicker').locationpicker({
-		location: {latitude: 48.028184, longitude:  1.884350},	
-		radius: 300,
+		location: {latitude: lat, longitude:  lon},	
+		radius: 100,
 		mapTypeControl: false,
 		overviewMapControl: false,
 		panControl: false,
 		rotateControl: false,
 		scaleControl: false,
 		streetViewControl: false,
-		zoom:3,
+		zoom:zoom,
 		onchanged: function(currentLocation, radius, isMarkerDropped) {
 			pictures[id].gps.latitude=currentLocation.latitude;
 			pictures[id].gps.longitude=currentLocation.longitude;
-			addCityToPreview(id, currentLocation.latitude, currentLocation.longitude);
+			$('#lat_'+id).val(currentLocation.latitude)			
+			$('#lon_'+id).val(currentLocation.longitude)
+			addCityToPreview(id, true);
 		}
 	});	
 }
@@ -113,6 +114,7 @@ function upload(files) {
 		if(nbPhotos == 3){maximizeDropZone();}
 
 		addPreview(data, nbPhotos-1);
+		photoAdded();
 
 		pictures[nbPhotos-1] = {
 			picture: data.replace("data:image/jpeg;base64,",""),
@@ -127,38 +129,45 @@ function upload(files) {
 			pictures[nbPhotos-1].date= EXIF.getTag(this, "DateTimeOriginal");
 			var latArr = EXIF.getTag(this, "GPSLatitude")
 			var lonArr = EXIF.getTag(this, "GPSLongitude")
-			if(latArr == undefined){
-				//DO SOMETHING ABOUT THAT
-			}else{
-				pictures[nbPhotos-1].gps.latitude=Number(latArr[0])+Number(latArr[1])/60+Number(latArr[2])/3600;
-				pictures[nbPhotos-1].gps.longitude=Number(lonArr[0])+Number(lonArr[1])/60+Number(lonArr[2])/3600;
+			if(latArr != undefined){
+				pictures[nbPhotos-1].gps.latitude  = DMSToAbsolute(latArr[0], latArr[1], latArr[2], EXIF.getTag(this, "GPSLatitudeRef"));
+				pictures[nbPhotos-1].gps.longitude = DMSToAbsolute(lonArr[0], lonArr[1], lonArr[2], EXIF.getTag(this, "GPSLongitudeRef"));
+				$('#lat_'+id).val(pictures[nbPhotos-1].gps.latitude)			
+				$('#lon_'+id).val(pictures[nbPhotos-1].gps.longitude)
 			}
 		});
-
-		addCityToPreview(id, pictures[nbPhotos-1].gps.latitude, pictures[nbPhotos-1].gps.longitude);
+		addCityToPreview(id, false);
 	};
 	reader.readAsDataURL(f);            
 }
 
+$("#page").on("changePage", function () {
+    nbPhotos = 0;
+    pictures = [];
+})
+
 $('#upload_pictures').on( "submit", function( event ) {
 	event.preventDefault();
-	if($('.needgeolocalisation').length != 0){
+
+	console.log($('.needgeolocalisation').length);
+	if(0 == $('.needgeolocalisation').length){
+		var formData;
+		var result = true;
+		while(nbPhotos > 0){
+			formData = pictures[nbPhotos];
+			API("/pic",formData,function(ret) {
+				result = result && ret.success;
+			});
+			nbPhotos--;
+		}	
+		nbPhotos=0;
+
+		if(result)
+			openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
+		else
+			openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+	}else{
 		//Still need some geolocalisation informations
 		openDialog('Need GPS Data', 'There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading', 'OK', function(){});
 	}
-	var formData;
-	var result = true;
-	while(nbPhotos > 0){
-		formData = pictures[nbPhotos];
-		API("/pic",formData,function(ret) {
-			result = result && ret.success;
-		});
-		nbPhotos--;
-	}	
-
-	console.info(result)
-	if(result)
-		openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
-	else
-		openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
 });

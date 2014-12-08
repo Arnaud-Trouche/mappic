@@ -9,8 +9,7 @@ function loadContent(content, callback){
     //Load the template for the current content
     $.get('templates/'+content+'.hgn', function(template) {
         var rendered = Mustache.render(template, {logged: user.logged});
-        $('#page').html(rendered);
-        $('#page').slideToggle('fast');
+        $('#page').html(rendered).trigger('changePage').slideToggle('fast');
         //Load the .js for the current content 
         $.get('javascripts/pages/'+content+'.js', null);      
     }).fail(function() {
@@ -199,7 +198,52 @@ function closeDialog(){
     });
 }
 
-//API
+// GPS
+function DMSToAbsolute(D, M, S, NSWE){
+    var sign = 1;
+    if(NSWE == 'W' || NSWE == 'S')
+        sign = -1;
+
+    return sign*(Number(D)+Number(M)/60+Number(S)/3600);                
+}
+
+// PICTURES
+function addPreview(src, id, lat, lon){
+    $('.pictureCanvas').append('<div class="preview_drop" id="preview_drop_'+id+'" style="display:none;"></div>');
+    $('#preview_drop_'+id)
+        .append("<img src='"+src+"' height='200' id='prev_pic_"+id+"'/>")
+        .append("<span class='deleteCross'><img src='images/ic_delete_black_18dp.png' alt='X' onClick=\"deletePhoto('"+src+"','"+id+"')\"/></span>")
+        .append("<p></p>")
+        .append("<input type='hidden' id='lat_"+id+"' value='"+lat+"'/>")
+        .append("<input type='hidden' id='lon_"+id+"' value='"+lon+"'/>")
+    $("#prev_pic_"+id)
+    .load(function() { $('#preview_drop_'+id).show(400, function() {}); })
+    .error(function() { console.error("error loading image"); });
+}
+
+function addCityToPreview(id, modifiable){
+    var lat = $("#lat_"+id).val();
+        lon = $("#lon_"+id).val();
+    $.ajax({
+        url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon,
+        type: "GET"
+    }).done(function(ret) { 
+        if (ret.status == "OK" && ret.results) {
+            var indice = ret.results.length - 4;
+            var city = ret.results[indice].formatted_address;
+            if(modifiable)
+                $('#prev_pic_'+id).parent().children("p").html('<div class="button_light link needgeolocalisation" onclick="openMap('+id+')">'+city+'</div>');
+            else
+                $('#prev_pic_'+id).parent().children("p").html(city);
+        }else{
+            $("#lat_"+id).val('undefined');
+            $("#lon_"+id).val('undefined');
+            $("#prev_pic_"+id).parent().children("p").html('<div class="button_raised link needgeolocalisation" onclick="openMap('+id+')">ADD GPS DATA</div>');
+        }
+    });
+}
+
+// API
 
 function API(url,data,callback) {
     if (user.logged != true) {

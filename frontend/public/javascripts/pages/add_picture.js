@@ -40,7 +40,7 @@ $('#file').change(function() {
 			.attr('src', e.target.result)
 			.height(200)
 			.show('',function() { $('#preview_img').css('display','block'); });
-
+			
 			EXIF.getData(document.getElementById("preview_img"), function() {
 				currentPicture.date= EXIF.getTag(this, "DateTimeOriginal");
 				var latArr = EXIF.getTag(this, "GPSLatitude")
@@ -58,8 +58,8 @@ $('#file').change(function() {
 					});	
 				}else{
 					$('#coordinates').slideUp('fast');
-					currentPicture.gps.latitude=Number(latArr[0])+Number(latArr[1])/60+Number(latArr[2])/3600;
-					currentPicture.gps.longitude=Number(lonArr[0])+Number(lonArr[1])/60+Number(lonArr[2])/3600;
+					currentPicture.gps.latitude  = DMSToAbsolute(latArr[0], latArr[1], latArr[2], EXIF.getTag(this, "GPSLatitudeRef"));
+					currentPicture.gps.longitude = DMSToAbsolute(lonArr[0], lonArr[1], lonArr[2], EXIF.getTag(this, "GPSLongitudeRef"));
 				}
 			});
 		};

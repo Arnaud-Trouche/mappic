@@ -155,7 +155,7 @@ $('#upload_pictures').on( "submit", function( event ) {
 		var result = true;
 		while(nbPhotos > 0){
 			formData = pictures[nbPhotos];
-			API("/pic",formData,function(ret) {
+			API("/pic","POST",formData,function(ret) {
 				result = result && ret.success;
 			});
 			nbPhotos--;

@@ -1,5 +1,5 @@
-//var serverAddress = 'http://'+$(location).attr('host')+":443";
-var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
+var serverAddress = 'http://'+$(location).attr('host')+":443";
+//var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
 
 var user = {
 	logged:false,
@@ -245,30 +245,36 @@ function addCityToPreview(id, modifiable){
 
 // API
 
-function API(url,data,callback) {
+function API(url,method,data,callback,progressCB) {
     if (user.logged != true) {
         alert("Not connected ?");
         location="/";
         return;
     }
 
-    if (data != null && data != undefined) {
-        var type="POST";
-    } else {
-        var type="GET";
-    }
-
     var ts=Date.now().toString();
     var hash = CryptoJS.HmacSHA1(ts, user.passwordHash);
     $.ajax({
         url: serverAddress+"/api"+url,
-        type: type,
+        type: method,
         data:data,
         headers: {
             "X-API-Login":user.login,
             "X-API-Hash":hash,
             "X-API-Time":ts,
-        }
+        },
+        xhr: function () {
+			var xhr = new window.XMLHttpRequest();
+			if (progressCB != undefined && progressCB != null) {
+				xhr.addEventListener("progress", function (evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						progressCB(percentComplete);
+					}
+				}, false);
+			}
+			return xhr;
+		},
     }).done(function(ret) {
         if (ret.success == false) {
             alert("API error");

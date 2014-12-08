@@ -17,7 +17,7 @@ $('#upload_photo').on( "submit", function( event ) {
 	if (currentPicture.picture != undefined) {
 		formData = currentPicture;
 		
-		API("/pic",formData,function(ret) {
+		API("/pic","POST",formData,function(ret) {
 			if(ret.success)
 				openDialog('Upload complete','The picture has been succesfully uploaded on mappic. You can now find it on the map !','OK', function() {
 					link('home');

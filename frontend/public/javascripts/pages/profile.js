@@ -1,7 +1,7 @@
 if(!user.logged)
 	location="/";
 
-API("/user/",null,function(data) {
+API("/user/","GET",null,function(data) {
 	$('#username').html(data.login);
 	$('#mail').html(data.mail);
 });

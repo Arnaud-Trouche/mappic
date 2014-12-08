@@ -19,7 +19,7 @@ $(document).ready(function($) {
 		var markers=[];
 
 		
-		API('/pic',null,function(data) {
+		API('/pic',"GET",null,function(data) {
 			
 			for (i=0; i<data.pictures.length; i++) {
 				

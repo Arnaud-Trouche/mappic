@@ -1,11 +1,10 @@
 <div id="content" class="cropped">
 	<h1> Upload one picture</h1>
 
-	<form id="upload_photo" enctype="multipart/form-data">
-		<label>Image</label>
-		<input type="file" name="file" id="file" />
-
-		<img src="#" id="preview_img" />
+	<form id="upload_photo" enctype="multipart/form-data" style="text-align:center">
+		<input style="display:none;" type="file" name="file" id="file" />
+		<button class="button_raised" onclick="$('#file').click(); return false;">Choose a picture</button>
+		<img src="#" id="preview_img" style="margin-top:20px;" />
 		<br />
 
 		<fieldset id="coordinates" style="display:none">
@@ -16,8 +15,13 @@
 
 		</fieldset>
 
-		<input type="submit" class="button_raised" style=""/>
+		<input type="submit" class="button_raised" id="submitbutton" style="display:none;" />
+		
+		<progress id="uploadprogress" style="display:none;"></progress>
+		
 	</form>
+	
+	
 	
 	
 	

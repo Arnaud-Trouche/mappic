@@ -15,8 +15,10 @@ $('#coordinates').css('display', 'none');
 $('#upload_photo').on( "submit", function( event ) {
 	event.preventDefault();
 	if (currentPicture.picture != undefined) {
-		formData = currentPicture;
+		$("#uploadprogress").show();
+		$("#submitbutton").hide();
 		
+		formData = currentPicture;
 		API("/pic","POST",formData,function(ret) {
 			if(ret.success)
 				openDialog('Upload complete','The picture has been succesfully uploaded on mappic. You can now find it on the map !','OK', function() {
@@ -24,9 +26,10 @@ $('#upload_photo').on( "submit", function( event ) {
 				})
 			else
 				openDialog('An error occured', 'We were unable to upload your picture. Please try again.', 'Try again', function(){})
+		}, function(progress) {
+			$("#uploadprogress").attr({value:progress});
 		});
 	}
-	
 });
 
 
@@ -41,7 +44,11 @@ $('#file').change(function() {
 			.height(200)
 			.show('',function() { $('#preview_img').css('display','block'); });
 			
-			EXIF.getData(document.getElementById("preview_img"), function() {
+			$('#submitbutton').slideDown();
+			
+			var image = new Image();
+			image.onload = function() {
+			EXIF.getData(image, function() {
 				currentPicture.date= EXIF.getTag(this, "DateTimeOriginal");
 				var latArr = EXIF.getTag(this, "GPSLatitude")
 				var lonArr = EXIF.getTag(this, "GPSLongitude")
@@ -61,7 +68,9 @@ $('#file').change(function() {
 					currentPicture.gps.latitude  = DMSToAbsolute(latArr[0], latArr[1], latArr[2], EXIF.getTag(this, "GPSLatitudeRef"));
 					currentPicture.gps.longitude = DMSToAbsolute(lonArr[0], lonArr[1], lonArr[2], EXIF.getTag(this, "GPSLongitudeRef"));
 				}
-			});
+				});
+			};
+			image.src = data;
 		};
 		reader.readAsDataURL($(this)[0].files[0]);
 	}

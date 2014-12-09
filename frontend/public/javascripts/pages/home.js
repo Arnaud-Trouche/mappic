@@ -53,6 +53,8 @@ $(document).ready(function($) {
 				bounds.extend(marker.position);
 			});
 			map.fitBounds(bounds);
+			var zoom = map.getZoom();
+			if (zoom > 7) map.setZoom(7);
 			
 		});
 		

@@ -1,5 +1,5 @@
-var serverAddress = 'http://'+$(location).attr('host')+":443";
-//var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
+//var serverAddress = 'http://'+$(location).attr('host')+":443";
+var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
 
 var user = {
 	logged:false,
@@ -266,7 +266,7 @@ function API(url,method,data,callback,progressCB) {
         xhr: function () {
 			var xhr = new window.XMLHttpRequest();
 			if (progressCB != undefined && progressCB != null) {
-				xhr.addEventListener("progress", function (evt) {
+				xhr.upload.addEventListener("progress", function (evt) {
 					if (evt.lengthComputable) {
 						var percentComplete = evt.loaded / evt.total;
 						progressCB(percentComplete);

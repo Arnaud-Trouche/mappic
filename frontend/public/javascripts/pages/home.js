@@ -30,7 +30,7 @@ $(document).ready(function($) {
 					position: new google.maps.LatLng(data.pictures[i].gps.latitude, data.pictures[i].gps.longitude),
 					map: map,
 					title: '',
-					//icon: image,
+					//icon: serverAddress+"/data/"+data.pictures[i].hash+".jpg",
 					content:contentString,
 				});
 				

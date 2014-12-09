@@ -92,7 +92,9 @@ $(document).on('drop', '#drop', function(e) {
            e.preventDefault();
            e.stopPropagation();
            // Main function to upload
-           upload(e.originalEvent.dataTransfer.files[0]);
+           for (i=0; i<e.originalEvent.dataTransfer.files.length; i++) {
+			   upload(e.originalEvent.dataTransfer.files[i]);
+		   }
        }  
    }
    $(this).removeClass('dragover');

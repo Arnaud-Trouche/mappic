@@ -232,7 +232,7 @@ function addCityToPreview(id, modifiable){
             var indice = ret.results.length - 4;
             var city = ret.results[indice].formatted_address;
             if(modifiable)
-                $('#prev_pic_'+id).parent().children("p").html('<div class="button_light link needgeolocalisation" onclick="openMap('+id+')">'+city+'</div>');
+                $('#prev_pic_'+id).parent().children("p").html('<div class="button_light link" onclick="openMap('+id+')">'+city+'</div>');
             else
                 $('#prev_pic_'+id).parent().children("p").html(city);
         }else{

@@ -81,24 +81,35 @@ function openMap(id){
 	});	
 }
 
-//Data
+//DATA
+
+//Drag&Drop
 $(document).on('drop', '#drop', function(e) {
+	console.log("Photo dropped !");
 	if(e.originalEvent.dataTransfer){
 		if(e.originalEvent.dataTransfer.files.length) {
            // Stop the propagation of the event
            e.preventDefault();
            e.stopPropagation();
            // Main function to upload
-           upload(e.originalEvent.dataTransfer.files);
+           upload(e.originalEvent.dataTransfer.files[0]);
        }  
    }
    $(this).removeClass('dragover');
    return false;
 });
 
+//Manual selection
+$('#file').change(function() {
+	if ($(this)[0].files && $(this)[0].files[0]) {
+		console.log("File selected");
+		upload($(this)[0].files[0]);
+		$(this).val(''); // Reset the input field
+	}
+});
 
 function upload(files) {
-	var f = files[0] ;
+	var f = files ;
 
 	if (!f.type.match('image/jpeg')) {
 		openDialog('Wrong type file', 'You can only upload jpeg files.', 'Try again', function(){});
@@ -113,10 +124,10 @@ function upload(files) {
 
 		if(nbPhotos == 3){maximizeDropZone();}
 
-		addPreview(data, nbPhotos-1);
+		addPreview(data, id);
 		photoAdded();
 
-		pictures[nbPhotos-1] = {
+		pictures[id] = {
 			picture: data.replace("data:image/jpeg;base64,",""),
 			date:undefined,
 			gps:{
@@ -130,10 +141,10 @@ function upload(files) {
 			var latArr = EXIF.getTag(this, "GPSLatitude")
 			var lonArr = EXIF.getTag(this, "GPSLongitude")
 			if(latArr != undefined){
-				pictures[nbPhotos-1].gps.latitude  = DMSToAbsolute(latArr[0], latArr[1], latArr[2], EXIF.getTag(this, "GPSLatitudeRef"));
-				pictures[nbPhotos-1].gps.longitude = DMSToAbsolute(lonArr[0], lonArr[1], lonArr[2], EXIF.getTag(this, "GPSLongitudeRef"));
-				$('#lat_'+id).val(pictures[nbPhotos-1].gps.latitude)			
-				$('#lon_'+id).val(pictures[nbPhotos-1].gps.longitude)
+				pictures[id].gps.latitude  = DMSToAbsolute(latArr[0], latArr[1], latArr[2], EXIF.getTag(this, "GPSLatitudeRef"));
+				pictures[id].gps.longitude = DMSToAbsolute(lonArr[0], lonArr[1], lonArr[2], EXIF.getTag(this, "GPSLongitudeRef"));
+				$('#lat_'+id).val(pictures[id].gps.latitude)			
+				$('#lon_'+id).val(pictures[id].gps.longitude)
 			}
 		});
 		addCityToPreview(id, false);
@@ -144,6 +155,7 @@ function upload(files) {
 $("#page").on("changePage", function () {
     nbPhotos = 0;
     pictures = [];
+    $(document).off('drop', '#drop');
 })
 
 $('#upload_pictures').on( "submit", function( event ) {
@@ -153,12 +165,12 @@ $('#upload_pictures').on( "submit", function( event ) {
 	if(0 == $('.needgeolocalisation').length){
 		var formData;
 		var result = true;
-		while(nbPhotos > 0){
-			formData = pictures[nbPhotos];
+		for (i=0; i<nbPhotos; i++) {
+			formData = pictures[i];
+			console.log(formData);
 			API("/pic","POST",formData,function(ret) {
 				result = result && ret.success;
 			});
-			nbPhotos--;
 		}	
 		nbPhotos=0;
 

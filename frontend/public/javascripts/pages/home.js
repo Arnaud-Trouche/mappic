@@ -43,18 +43,19 @@ $(document).ready(function($) {
 				
 			}
 			
-			
-			var markerCluster = new MarkerClusterer(map, markers);
+			if (markers.length > 0) {
+				var markerCluster = new MarkerClusterer(map, markers);
 
-			
-			// Center and extend the map to see all the markers
-			var bounds = new google.maps.LatLngBounds();
-			$.each(markers, function (index, marker) {
-				bounds.extend(marker.position);
-			});
-			map.fitBounds(bounds);
-			var zoom = map.getZoom();
-			if (zoom > 7) map.setZoom(7);
+				
+				// Center and extend the map to see all the markers
+				var bounds = new google.maps.LatLngBounds();
+				$.each(markers, function (index, marker) {
+					bounds.extend(marker.position);
+				});
+				map.fitBounds(bounds);
+				var zoom = map.getZoom();
+				if (zoom > 6) map.setZoom(6);
+			}
 			
 		});
 		

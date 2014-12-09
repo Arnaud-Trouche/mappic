@@ -163,25 +163,35 @@ $("#page").on("changePage", function () {
 $('#upload_pictures').on( "submit", function( event ) {
 	event.preventDefault();
 
-	console.log($('.needgeolocalisation').length);
-	if(0 == $('.needgeolocalisation').length){
-		var formData;
-		var result = true;
-		for (i=0; i<nbPhotos; i++) {
-			formData = pictures[i];
-			console.log(formData);
-			API("/pic","POST",formData,function(ret) {
-				result = result && ret.success;
-			});
-		}	
-		nbPhotos=0;
-
-		if(result)
-			openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
-		else
-			openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
-	}else{
+	if(0 == $('.needgeolocalisation').length) {
+		$("#uploadprogress").show();
+		$("#submitbutton").hide();
+		sendToServer(0);
+	} else {
 		//Still need some geolocalisation informations
 		openDialog('Need GPS Data', 'There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading', 'OK', function(){});
 	}
 });
+
+var errorUpload=false;
+
+function sendToServer(id) {
+	API("/pic","POST",pictures[id],function(ret) {
+						
+				id++;
+				
+				if (id == nbPhotos) {
+					if (!errorUpload) {
+						openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
+					} else {
+						openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+					}
+				} else {
+					sendToServer(id);
+				}
+				
+	}, function(progress) {
+		globalProgress=(id + progress)/nbPhotos;
+		$("#uploadprogress").attr({value:globalProgress});
+	});
+}

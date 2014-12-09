@@ -1,7 +1,7 @@
 <div id="content" class="cropped">
 	<h1> Upload photos</h1>
 
-	<form id="upload_pictures" enctype="multipart/form-data">
+	<form id="upload_pictures"  enctype="multipart/form-data">
 	<input type="file" id="file" style="display:none;" />
 		<div class="pictureCanvas" id="drop">
 			<p id="tip">Drop your pictures here !</p>
@@ -9,11 +9,10 @@
 		
 		<button class="button_raised" onclick="$('#file').click(); return false;">+</button>
 		
-		<input type="submit" class="button_raised" style="display:none;"/> 
+		<input type="submit" class="button_raised" id="submitbutton" style="display:none;"/> 
 	
 	
-	
-	
+
 	<progress id="uploadprogress" style="display:none;"></progress>
 	
 	</form>

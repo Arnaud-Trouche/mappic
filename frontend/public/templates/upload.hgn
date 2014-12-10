@@ -2,22 +2,19 @@
 	<h1> Upload photos</h1>
 
 	<form id="upload_pictures" enctype="multipart/form-data">
-	<input type="file" id="file" style="display:none;" />
+		<input type="file" id="file" style="display:none;" />
 		<div class="pictureCanvas" id="drop">
-			<p id="tip">Drop your pictures here !</p>
+			<div id="tip" class='widthall'>
+				<p>Drop your pictures here </p>
+				<p>or</p>
+				<button class="button_light" onclick="$('#file').click(); return false;">Choose a picture</button>
+			</div>
+		</div>	
+		
+		<div style="text-align:center">
+			<input type="submit" class="button_raised" style="display:none;"/> 
+
+			<progress id="uploadprogress" style="display:none;"></progress>
 		</div>
-		
-		<button class="button_raised" onclick="$('#file').click(); return false;">+</button>
-		
-		<input type="submit" class="button_raised" style="display:none;"/> 
-	
-	
-	
-	
-	<progress id="uploadprogress" style="display:none;"></progress>
-	
-	</form>
-	
-	
-	
+	</form>	
 </div>

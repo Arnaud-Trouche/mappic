@@ -26,7 +26,6 @@ $(document).on('dragleave', '#drop', function(e) {
 
 function photoAdded(){
 	if($(".preview_drop").length !=0){
-		$('#tip').css('display', 'none');
 		$('input[type=submit]').show();
 		$('#drop').css('align-items','stretch');
 	}
@@ -85,7 +84,6 @@ function openMap(id){
 
 //Drag&Drop
 $(document).on('drop', '#drop', function(e) {
-	console.log("Photo dropped !");
 	if(e.originalEvent.dataTransfer){
 		if(e.originalEvent.dataTransfer.files.length) {
            // Stop the propagation of the event
@@ -93,8 +91,8 @@ $(document).on('drop', '#drop', function(e) {
            e.stopPropagation();
            // Main function to upload
            for (i=0; i<e.originalEvent.dataTransfer.files.length; i++) {
-			   upload(e.originalEvent.dataTransfer.files[i]);
-		   }
+           	upload(e.originalEvent.dataTransfer.files[i]);
+           }
        }  
    }
    $(this).removeClass('dragover');
@@ -111,7 +109,7 @@ $('#file').change(function() {
 });
 
 function upload(files) {
-	var f = files ;
+	var f = files;
 
 	if (!f.type.match('image/jpeg')) {
 		openDialog('Wrong type file', 'You can only upload jpeg files.', 'Try again', function(){});
@@ -120,11 +118,11 @@ function upload(files) {
 
 	var reader = new FileReader();
 	reader.onload = function (e) {
-		nbPhotos++;	
-		var data = e.target.result;
-		var id = (nbPhotos-1);
-
+		nbPhotos++;
 		if(nbPhotos == 3){maximizeDropZone();}
+
+		var data = e.target.result,
+		id = (nbPhotos-1);
 
 		addPreview(data, id);
 		photoAdded();
@@ -136,7 +134,7 @@ function upload(files) {
 				latitude:undefined,
 				longitude:undefined,
 			}
-		}
+		}		
 
 		EXIF.getData(document.getElementById("prev_pic_"+id), function() {
 			pictures[nbPhotos-1].date= EXIF.getTag(this, "DateTimeOriginal");
@@ -151,35 +149,45 @@ function upload(files) {
 		});
 		addCityToPreview(id, false);
 	};
+
 	reader.readAsDataURL(f);            
 }
 
 $("#page").on("changePage", function () {
-    nbPhotos = 0;
-    pictures = [];
-    $(document).off('drop', '#drop');
+	nbPhotos = 0;
+	pictures = [];
+	$(document).off('drop', '#drop');
 })
 
 $('#upload_pictures').on( "submit", function( event ) {
 	event.preventDefault();
 
-	console.log($('.needgeolocalisation').length);
 	if(0 == $('.needgeolocalisation').length){
 		var formData;
 		var result = true;
+		var nbPicsInitial = nbPhotos;
+		$("input[type=submit]").hide();
+		$("#uploadprogress").show();
+
 		for (i=0; i<nbPhotos; i++) {
 			formData = pictures[i];
-			console.log(formData);
 			API("/pic","POST",formData,function(ret) {
 				result = result && ret.success;
+				var progress = $("#uploadprogress").val()+(1/nbPicsInitial);
+				$("#uploadprogress").val(progress);
+				nbPhotos--;
+				if(nbPhotos == 0){
+					if(result)
+						openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
+					else
+						openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+				}
+			}, function(progress) {
+				//$("#uploadprogress").attr({value:progress});
 			});
 		}	
-		nbPhotos=0;
 
-		if(result)
-			openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
-		else
-			openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+		
 	}else{
 		//Still need some geolocalisation informations
 		openDialog('Need GPS Data', 'There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading', 'OK', function(){});

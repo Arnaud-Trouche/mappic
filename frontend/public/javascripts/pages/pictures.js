@@ -18,9 +18,7 @@ function deletePhoto(src, id){
 		$('#preview_drop_'+id).remove();		
 	});
 	API("/pic/"+id,"DELETE", null, function(ret) {
-		if (ret.success) {
-			openDialog('Image deleted', '', 'OK', function(){});
-		} else {
+		if (!ret.success) {
 			openDialog('Error while deleting image', ':(', 'OK', function(){});
 		}
 	});

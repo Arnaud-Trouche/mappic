@@ -209,6 +209,8 @@ function DMSToAbsolute(D, M, S, NSWE){
 
 // PICTURES
 function addPreview(src, id, lat, lon){
+    var tip = $('#tip');
+    $('#tip').remove();
     $('.pictureCanvas').append('<div class="preview_drop" id="preview_drop_'+id+'" style="display:none;"></div>');
     $('#preview_drop_'+id)
         .append("<img src='"+src+"' height='200' id='prev_pic_"+id+"'/>")
@@ -219,6 +221,7 @@ function addPreview(src, id, lat, lon){
     $("#prev_pic_"+id)
     .load(function() { $('#preview_drop_'+id).show(400, function() {}); })
     .error(function() { console.error("error loading image"); });
+    $('.pictureCanvas').append(tip);
 }
 
 function addCityToPreview(id, modifiable){

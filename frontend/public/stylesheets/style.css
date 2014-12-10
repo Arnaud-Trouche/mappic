@@ -254,10 +254,29 @@ form .form_errorbox{color: #F44336;}
 	box-shadow: 0 0 5px 0px hsla(0,0%,0%,.35);
 }
 
+progress {
+	background-color: #fff;  
+    -webkit-appearance: none;
+	border: none;
+    height: 18px;  
+}
+
+progress::-webkit-progress-bar {
+	background: #ddd;
+	border-radius: 50px;
+	padding: 2px;
+	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+}
+
+progress::-webkit-progress-value {
+	border-radius: 50px;
+	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+	background:#40C4FF;
+}
 
 .pictureCanvas{
 	box-shadow: 0 0 15px 0px hsla(0,0%,0%,.1) inset;
-	min-height: 200px;
+	min-height: 268px;
 	padding: 3px;
 	display: flex;
 	flex-direction: row;
@@ -272,6 +291,14 @@ form .form_errorbox{color: #F44336;}
 }
 .pictureCanvas.dragover{box-shadow: 0 0 15px 0px hsla(0,0%,0%,.5) inset;}
 .pictureCanvas p{text-align: center;width: 100%;}
+div#tip{
+	text-align: center;
+	margin:auto;
+	width: 200px;
+}
+div#tip button{background: none;}
+div#tip button:hover{background: rgba(153,153,153,0.2);}
+div#tip button:active{background: rgba(153,153,153,0.4);}
 .preview_drop{
 	position: relative;
 	background: #FFF;
@@ -283,7 +310,7 @@ form .form_errorbox{color: #F44336;}
 	padding: 2px 0;
 	font-size: 0.8em;
 	max-width: 250px;
-	line-height: 25px;
+	line-height: 30px;
 }
 .preview_drop p{
 	margin-top: auto;
@@ -297,6 +324,8 @@ form .form_errorbox{color: #F44336;}
 }
 .preview_drop .button_light{
 	font-size: 0.8em;
+	margin: 0; 
+ 	padding: 0 4px;
 }
 .preview_drop .deleteCross{
 	position: absolute;
@@ -311,9 +340,8 @@ form .form_errorbox{color: #F44336;}
 	visibility: visible;
 	opacity: 1;
 }
-.preview_drop:hover img{
-	opacity: 0.65;
-}
+.preview_drop:hover img{opacity: 0.65;}
+
 
 /* Dialogs */
 #dialog_container{
@@ -364,25 +392,6 @@ form .form_errorbox{color: #F44336;}
 	width:300px;
 }
 
-progress {
-	background-color: #fff;  
-    -webkit-appearance: none;
-	border: none;
-    height: 18px;  
-}
-
-progress::-webkit-progress-bar {
-	background: #ddd;
-	border-radius: 50px;
-	padding: 2px;
-	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
-}
-
-progress::-webkit-progress-value {
-	border-radius: 50px;
-	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
-	background:#FFEB3B;
-}
 
 @media screen and (max-device-width: 500px) {
 	#content{

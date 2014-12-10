@@ -161,35 +161,35 @@ $("#page").on("changePage", function () {
 
 $('#upload_pictures').on( "submit", function( event ) {
 	event.preventDefault();
-
-	if(0 == $('.needgeolocalisation').length){
-		var formData;
-		var result = true;
-		var nbPicsInitial = nbPhotos;
-		$("input[type=submit]").hide();
+	if(0 == $('.needgeolocalisation').length) {
 		$("#uploadprogress").show();
-
-		for (i=0; i<nbPhotos; i++) {
-			formData = pictures[i];
-			API("/pic","POST",formData,function(ret) {
-				result = result && ret.success;
-				var progress = $("#uploadprogress").val()+(1/nbPicsInitial);
-				$("#uploadprogress").val(progress);
-				nbPhotos--;
-				if(nbPhotos == 0){
-					if(result)
-						openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
-					else
-						openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
-				}
-			}, function(progress) {
-				//$("#uploadprogress").attr({value:progress});
-			});
-		}	
-
-		
-	}else{
+		$("input[type=submit]").hide();
+		sendToServer(0);
+	} else {
 		//Still need some geolocalisation informations
 		openDialog('Need GPS Data', 'There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading', 'OK', function(){});
 	}
 });
+
+var errorUpload=false;
+
+function sendToServer(id) {
+	API("/pic","POST",pictures[id],function(ret) {
+
+		id++;
+
+		if (id == nbPhotos) {
+			if (!errorUpload) {
+				openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
+			} else {
+				openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+			}
+		} else {
+			sendToServer(id);
+		}
+
+	}, function(progress) {
+		globalProgress=(id + progress)/nbPhotos;
+		$("#uploadprogress").attr({value:globalProgress});
+	});
+}

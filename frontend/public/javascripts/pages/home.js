@@ -22,10 +22,11 @@ $(document).ready(function($) {
 		API('/pic',"GET",null,function(data) {
 			
 			for (i=0; i<data.pictures.length; i++) {
+				var imageMin = serverAddress+"/data/"+data.pictures[i].hash+"_min.jpg";
 				
-				contentString = "<img class='mapImg' src='"+serverAddress+"/data/"+data.pictures[i].hash+".jpg' />";
+				contentString = "<img class='mapImg' src='"+imageMin+"' />";
 
-				var image = serverAddress+"/data/"+data.pictures[i].hash+".jpg";
+				
 				markers[i] = new google.maps.Marker({
 					position: new google.maps.LatLng(data.pictures[i].gps.latitude, data.pictures[i].gps.longitude),
 					map: map,

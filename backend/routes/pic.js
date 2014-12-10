@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var db = require('./db.js');
 var fct = require("./functions.js");
+var gm = require('gm');
 
 router.get('/', function(req, res) {
 	login=req.get("X-API-Login");
@@ -36,7 +37,10 @@ router.post('/', function(req, res) {
 				
 				fs.writeFileSync("data/"+id+".jpg", new Buffer(req.body.picture, "base64"));
 				
-				
+				// Resizing part
+				gm("data/"+id+".jpg")
+					.resize(null, 200)
+					.write("data/"+id+"_min.jpg",function() {});
 
 				pic = new db.Picture({
 					hash:id,
@@ -83,6 +87,7 @@ router['delete']('/:hash', function(req,res) {
 						}
 					user.save();
 					fs.unlinkSync('data/'+req.params.hash+'.jpg');
+					fs.unlinkSync('data/'+req.params.hash+'_min.jpg');
 					return res.send({success:true});
 				} else {
 					return res.send({success:false});

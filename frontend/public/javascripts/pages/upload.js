@@ -102,7 +102,6 @@ $(document).on('drop', '#drop', function(e) {
 //Manual selection
 $('#file').change(function() {
 	if ($(this)[0].files && $(this)[0].files[0]) {
-		console.log("File selected");
 		upload($(this)[0].files[0]);
 		$(this).val(''); // Reset the input field
 	}

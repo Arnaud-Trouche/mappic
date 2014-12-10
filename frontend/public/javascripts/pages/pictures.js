@@ -6,7 +6,7 @@ if(user.logged){
 
 	API('/pic',"GET",null,function(data) {		
 		for (i=0; i<data.pictures.length; i++) {
-			addPreview(serverAddress+'/data/'+data.pictures[i].hash+'.jpg', data.pictures[i].hash, data.pictures[i].gps.latitude, data.pictures[i].gps.longitude);
+			addPreview(serverAddress+'/data/'+data.pictures[i].hash+'_min.jpg', data.pictures[i].hash, data.pictures[i].gps.latitude, data.pictures[i].gps.longitude);
 			addCityToPreview(data.pictures[i].hash);
 		}			
 	});		

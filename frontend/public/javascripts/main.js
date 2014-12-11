@@ -1,5 +1,5 @@
-var serverAddress = 'http://'+$(location).attr('host')+":443";
-//var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
+// var serverAddress = 'http://'+$(location).attr('host')+":443";
+var serverAddress = 'http://cloud-31.skelabb.ltu.se:443';
 
 var user = {
 	logged:false,
@@ -166,36 +166,43 @@ function confPasswordCheck(event){
 var callback = function(){};
 
 function initDialog(){
-    $("#dialog span.button_light").click(function(event) {
+    $("#dialog_container, #dialog span.button_light").click(function(event) {
         closeDialog();
     });
-    $("#blackout").click(function(event) {
-        closeDialog();
+    $("#dialog").click(function(event) {
+        event.stopPropagation();
     });
 }
 
 function openDialog(title,message,validation,clbck){
     callback = clbck;
-    $("#dialog h1").html(title);
+    if(title=='')
+        $("#dialog h1").css('display', 'none');
+    else
+        $("#dialog h1").html(title).css('display', 'initial');
+
     $("#dialog p").html(message);
-    $("#dialog .button_light").html(validation);
-    $("#blackout").css('height', ($( document ).innerHeight())+'px');
-    $("#blackout, #dialog").css({
-        display: 'block',
+    $("#dialog #dialogSubmit").html(validation);
+    $("#dialog_container").css({
+        display: 'flex',
         opacity: '0'
     });
-    var pixels = Math.round(($( window ).innerHeight()-$('#dialog_container').innerHeight())/2)+'px';
-    $('#dialog_container').css('top', pixels);
-    $("#blackout").animate({opacity: 0.55}, 'fast');
-    $("#dialog").animate({opacity:1}, 'fast');
+    $("#dialog_container").animate({opacity:1}, 'fast');
 }
 
 function closeDialog(){
-    $("#blackout, #dialog").animate({opacity: 0}, 'fast', function(){
-        $("#blackout, #dialog").css('display', 'none');    
+    $("#dialog_container").animate({opacity: 0}, 'fast', function(){
+        $("#dialog_container").css('display', 'none');    
         callback();
         callback = function(){}; //if the function is called a second time, not 2 callbacks    
     });
+}
+
+function openDialogImg(link){
+    var openNewTab= "<span class='openNewTab'>OPEN IN NEW TAB</span>";
+    var trashIcon = "<span class='deleteCross'><img src='images/ic_delete_black_18dp.png' alt='X' onClick=\"deletePhoto('"+link+"',null)\"/></span>"
+    var content = "<div class='mapImg' ><img src='"+link+"' onClick=\"window.open('"+link+"','_blank')\"/>"+openNewTab+trashIcon+"</div>";
+    openDialog('', content, 'close', function(){});
 }
 
 // GPS
@@ -210,14 +217,15 @@ function DMSToAbsolute(D, M, S, NSWE){
 // PICTURES
 function addPreview(src, id, lat, lon){
     var tip = $('#tip');
+    var image = src.replace('_min','');
     $('#tip').remove();
     $('.pictureCanvas').append('<div class="preview_drop" id="preview_drop_'+id+'" style="display:none;"></div>');
     $('#preview_drop_'+id)
-        .append("<img src='"+src+"' height='200' id='prev_pic_"+id+"'/>")
-        .append("<span class='deleteCross'><img src='images/ic_delete_black_18dp.png' alt='X' onClick=\"deletePhoto('"+src+"','"+id+"')\"/></span>")
-        .append("<p></p>")
-        .append("<input type='hidden' id='lat_"+id+"' value='"+lat+"'/>")
-        .append("<input type='hidden' id='lon_"+id+"' value='"+lon+"'/>")
+    .append("<img src='"+src+"' height='200' id='prev_pic_"+id+"' onClick=\"openDialogImg('"+image+"' )\"/>")
+    .append("<span class='deleteCross'><img src='images/ic_delete_black_18dp.png' alt='X' onClick=\"deletePhoto('"+src+"','"+id+"')\"/></span>")
+    .append("<p></p>")
+    .append("<input type='hidden' id='lat_"+id+"' value='"+lat+"'/>")
+    .append("<input type='hidden' id='lon_"+id+"' value='"+lon+"'/>")
     $("#prev_pic_"+id)
     .load(function() { $('#preview_drop_'+id).show(400, function() {}); })
     .error(function() { console.error("error loading image"); });
@@ -226,14 +234,9 @@ function addPreview(src, id, lat, lon){
 
 function addCityToPreview(id, modifiable){
     var lat = $("#lat_"+id).val();
-        lon = $("#lon_"+id).val();
-    $.ajax({
-        url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon,
-        type: "GET"
-    }).done(function(ret) { 
-        if (ret.status == "OK" && ret.results) {
-            var indice = ret.results.length - 4;
-            var city = ret.results[indice].formatted_address;
+    lon = $("#lon_"+id).val();
+    getCity(lat,lon, function(status, city) { 
+        if (status) {
             if(modifiable)
                 $('#prev_pic_'+id).parent().children("p").html('<div class="button_light link" onclick="openMap('+id+')">'+city+'</div>');
             else
@@ -246,6 +249,25 @@ function addCityToPreview(id, modifiable){
     });
 }
 
+/** callback(status,city) : status==true if everything went well and city then contains the city
+*/
+function getCity(lat, lon, callback){
+    $.ajax({
+        url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon,
+        type: "GET"
+    }).done(function(ret) { 
+        var indice = ret.results.length - 4,
+        status = (ret.status == "OK" && ret.results),
+        city;
+        try{
+            city = ret.results[indice].formatted_address;
+        }catch(e){
+            city = null;
+            status = false;
+        }
+        callback(status,city);
+    });
+}
 // API
 
 function API(url,method,data,callback,progressCB) {
@@ -267,27 +289,27 @@ function API(url,method,data,callback,progressCB) {
             "X-API-Time":ts,
         },
         xhr: function () {
-			var xhr = new window.XMLHttpRequest();
-			if (progressCB != undefined && progressCB != null) {
-				xhr.upload.addEventListener("progress", function (evt) {
-					if (evt.lengthComputable) {
-						var percentComplete = evt.loaded / evt.total;
-						progressCB(percentComplete);
-					}
-				}, false);
-			}
-			return xhr;
-		},
-    }).done(function(ret) {
-        if (ret.success == false) {
-            alert("API error");
-            return;
+         var xhr = new window.XMLHttpRequest();
+         if (progressCB != undefined && progressCB != null) {
+            xhr.upload.addEventListener("progress", function (evt) {
+               if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  progressCB(percentComplete);
+              }
+          }, false);
         }
+        return xhr;
+    },
+}).done(function(ret) {
+    if (ret.success == false) {
+        alert("API error");
+        return;
+    }
 
-        if (callback != undefined && callback != null) {
-            callback(ret);
-        }
-    });
+    if (callback != undefined && callback != null) {
+        callback(ret);
+    }
+});
 }
 
 function logout() {

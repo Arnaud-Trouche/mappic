@@ -24,22 +24,17 @@ $(document).ready(function($) {
 			for (i=0; i<data.pictures.length; i++) {
 				var imageMin = serverAddress+"/data/"+data.pictures[i].hash+"_min.jpg";
 				
-				contentString = "<img class='mapImg' src='"+imageMin+"' />";
-
 				
 				markers[i] = new google.maps.Marker({
 					position: new google.maps.LatLng(data.pictures[i].gps.latitude, data.pictures[i].gps.longitude),
 					map: map,
 					title: '',
-					//icon: serverAddress+"/data/"+data.pictures[i].hash+".jpg",
-					content:contentString,
+					icon: imageMin,
 				});
-				
+
 				google.maps.event.addListener(markers[i], 'click', function() {
-					infowindow = new google.maps.InfoWindow({
-						content: this.content,
-					});
-					infowindow.open(map, this);
+					var link = this.icon.replace('_min','');
+					openDialogImg(link);
 				});	
 				
 			}
@@ -63,3 +58,16 @@ $(document).ready(function($) {
 		
 	}
 });
+
+
+function deletePhoto(link){
+	var tab = link.split('/');
+	var src = tab[tab.length-1].replace(".jpg","")
+	
+	API("/pic/"+src,"DELETE", null, function(ret) {
+		if (!ret.success) {
+			openDialog('Error while deleting image', ':(', 'OK', function(){});
+		}
+		location.reload()
+	});
+}

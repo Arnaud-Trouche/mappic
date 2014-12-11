@@ -32,7 +32,7 @@ $('#login').on( "submit", function( event ) {
 
 			localStorage.setItem("user",JSON.stringify(user));
 			loadHeaderMenu();
-			link('profile');
+			link('home');
 		} else {
 			$('#auth_failed').slideDown().delay(1000).slideUp();
 		}

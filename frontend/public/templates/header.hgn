@@ -8,7 +8,7 @@
 <div id="logzone">
 	{{#snd_bttn}}
 		{{#logged}}
-	<div class="button_light  link" onclick="link('profile');">Hello, {{login}}</div>
+	<div class="button_light  link" onclick="profile();">Hello, {{login}}</div>
 		{{/logged}}
 		{{^logged}}
 	<div class="button_light  link" onclick="link('register');">REGISTER</div>

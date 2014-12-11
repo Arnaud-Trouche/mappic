@@ -21,11 +21,11 @@ $('#upload_photo').on( "submit", function( event ) {
 		formData = currentPicture;
 		API("/pic","POST",formData,function(ret) {
 			if(ret.success)
-				openDialog('Upload complete','The picture has been succesfully uploaded on mappic. You can now find it on the map !','OK', function() {
+				openDialog('Upload complete','<p>The picture has been succesfully uploaded on mappic. You can now find it on the map !</p>','OK', function() {
 					link('home');
 				})
 			else
-				openDialog('An error occured', 'We were unable to upload your picture. Please try again.', 'Try again', function(){})
+				openDialog('An error occured', '<p>We were unable to upload your picture. Please try again.</p>', 'Try again', function(){})
 		}, function(progress) {
 			$("#uploadprogress").attr({value:progress});
 		});

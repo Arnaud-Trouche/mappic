@@ -268,6 +268,17 @@ function getCity(lat, lon, callback){
         callback(status,city);
     });
 }
+
+function profile(){
+    API("/user/","GET",null,function(data) {
+        var string = "<b>Username</b> : "+data.login+"<br /><br />"+
+        "<b>Mail</b> : "+data.mail+"<br /><br />";
+        openDialog('Profile',string,'OK',function(){});
+    });
+}
+
+
+
 // API
 
 function API(url,method,data,callback,progressCB) {

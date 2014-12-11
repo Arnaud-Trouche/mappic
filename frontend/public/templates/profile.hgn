@@ -1,5 +1,0 @@
-<div id="content" class="croppedcropped">
-	<h1>Your profile</h1>
-	<b>Username</b> : <span id="username"></span><br /><br />
-	<b>Mail</b> : <span id="mail"></span><br /><br />
-</div>

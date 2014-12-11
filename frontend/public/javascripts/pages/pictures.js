@@ -25,7 +25,7 @@ function deletePhoto(src, id){
 
 	API("/pic/"+id,"DELETE", null, function(ret) {
 		if (!ret.success) {
-			openDialog('Error while deleting image', ':(', 'OK', function(){});
+			openDialog('Error while deleting image', '<p>:(</p>', 'OK', function(){});
 		}
 	});
 	

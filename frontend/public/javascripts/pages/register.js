@@ -24,11 +24,11 @@ $('#register').on( "submit", function( event ) {
 		}
 	}).done(function(ret) {
 		if(ret.success)
-			openDialog('Registration complete','Everything went well and you are now registered. You will now be redirect to the login page where you can now proceed to login.','OK', function() {
+			openDialog('Registration complete','<p>Everything went well and you are now registered. You will now be redirect to the login page where you can now proceed to login.</p>','OK', function() {
 				link('login');
 			})
 		else
-			openDialog('An error occured', 'We were unable to register you, maybe because you have chosen a login that is already taken by somebody else. Please try again.', 'Try again', function(){})
+			openDialog('An error occured', '<p>We were unable to register you, maybe because you have chosen a login that is already taken by somebody else. Please try again.</p>', 'Try again', function(){})
 	});
 	
 });

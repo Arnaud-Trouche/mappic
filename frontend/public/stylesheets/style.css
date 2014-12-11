@@ -376,7 +376,11 @@ div#tip button:active{background: rgba(153,153,153,0.4);}
 	width: 100%
 }
 #dialog p{margin: 0;}
-#dialog p p{margin: 5px 0;}
+#dialog p p{
+	margin: 5px 0;
+	max-width: 400px;
+	text-align: justify;
+}
 #dialog .button_light{
 	position: absolute;
 	right: 15px;

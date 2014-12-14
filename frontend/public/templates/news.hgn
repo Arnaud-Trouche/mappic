@@ -2,11 +2,21 @@
 	<h1> News </h1>
 
 	<div>
+		<h2> <span class="date">11/12</span> New pictures visualisation </h2> 
+		<p> We have completely refactored the image display on the map. Now every picture has a thumbnail and when you click on it, you have the picture showed in big. Also in the pop-up you can click on the trash can to delete immediately the picture.</p>
+
+		<div class="img_container">
+			<img src="images/news/4.png" alt="Interface preview"/>
+		</div>
+		<br/>
+	</div>	
+
+	<div>
 		<h2> <span class="date">6/12</span> Drag&Drop upload form </h2> 
 		<p> A new functionnality on mappic : a sexy drag&drop uploading form And you can edit the geographic coordinates inside the page.</p>
 
 		<div class="img_container">
-			<img src="images/news/3.png" alt="Mobile mappic with a picture"so/>
+			<img src="images/news/3.png" alt="Drag&Drop preview"/>
 		</div>
 		<br/>
 	</div>	

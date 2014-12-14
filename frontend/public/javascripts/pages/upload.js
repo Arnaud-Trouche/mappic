@@ -111,7 +111,7 @@ function upload(files) {
 	var f = files;
 
 	if (!f.type.match('image/jpeg')) {
-		openDialog('Wrong type file', 'You can only upload jpeg files.', 'Try again', function(){});
+		openDialog('Wrong type file', '<p>You can only upload jpeg files.</p>', 'Try again', function(){});
 		return false ;
 	}
 
@@ -166,7 +166,7 @@ $('#upload_pictures').on( "submit", function( event ) {
 		sendToServer(0);
 	} else {
 		//Still need some geolocalisation informations
-		openDialog('Need GPS Data', 'There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading', 'OK', function(){});
+		openDialog('Need GPS Data', '<p>There is still some pictures that don\'t have geolocalisation data. You must enter geolocalisation for those pictures before uploading</p>', 'OK', function(){});
 	}
 });
 
@@ -179,9 +179,9 @@ function sendToServer(id) {
 
 		if (id == nbPhotos) {
 			if (!errorUpload) {
-				openDialog('Upload complete','The pictures have been succesfully uploaded on mappic. You can now find them on the map !','OK', function() {link('home');})
+				openDialog('Upload complete','<p>The pictures have been succesfully uploaded on mappic. You can now find them on the map !</p>','OK', function() {link('home');})
 			} else {
-				openDialog('An error occured', 'We were unable to upload at least one picture. Please try again.', 'Try again', function(){});
+				openDialog('An error occured', '<p>We were unable to upload at least one picture. Please try again.</p>', 'Try again', function(){});
 			}
 		} else {
 			sendToServer(id);

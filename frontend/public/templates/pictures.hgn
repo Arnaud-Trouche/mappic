@@ -1,5 +1,5 @@
 {{#logged}}
-<div id="content">
+<div id="content" class="nopadding">
 <h1>Pictures</h1>
 	<div class="pictureCanvas">
 		

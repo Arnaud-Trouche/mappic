@@ -14,14 +14,20 @@ if(user.logged){
 
 
 function deletePhoto(src, id){
+	if(id == null){
+		var tab = src.split('/');
+		id = tab[tab.length-1].replace(".jpg","")
+		closeDialog();
+	}
 	$('#preview_drop_'+id).hide(400, function(){
 		$('#preview_drop_'+id).remove();		
 	});
+
 	API("/pic/"+id,"DELETE", null, function(ret) {
 		if (!ret.success) {
-			openDialog('Error while deleting image', ':(', 'OK', function(){});
+			openDialog('Error while deleting image', '<p>:(</p>', 'OK', function(){});
 		}
 	});
-    
-    
+	
+	
 }

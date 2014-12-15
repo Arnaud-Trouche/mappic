@@ -40,7 +40,9 @@ $(document).ready(function($) {
 			}
 			
 			if (markers.length > 0) {
-				var markerCluster = new MarkerClusterer(map, markers);
+				var mcOptions = {gridSize: 100};
+
+				var markerCluster = new MarkerClusterer(map, markers, mcOptions);
 
 				
 				// Center and extend the map to see all the markers

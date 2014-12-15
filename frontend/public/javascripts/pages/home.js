@@ -14,8 +14,8 @@ $(document).ready(function($) {
 		};
 		var map = new google.maps.Map(document.getElementById('content'),
 			mapOptions);
-			
-			
+
+
 		var markers=[];
 
 		
@@ -68,6 +68,9 @@ function deletePhoto(link){
 		if (!ret.success) {
 			openDialog('Error while deleting image', '<p>:(</p>', 'OK', function(){});
 		}
-		location.reload()
+		$("#dialog_container").animate({opacity: 0}, 'fast', function(){
+			$("#dialog_container").css('display', 'none');    
+			location.reload();    
+		});
 	});
 }

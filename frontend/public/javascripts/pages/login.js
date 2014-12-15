@@ -17,7 +17,7 @@ $('#login').on( "submit", function( event ) {
 	var passwordHash = CryptoJS.SHA1(password).toString();
 	var hash = CryptoJS.HmacSHA1(ts, passwordHash);
 	$.ajax({
-		url: serverAddress+"/api/user/login",
+		url: serverAddress+"/api/user/",
 		type: "GET",
 		headers: {
 			"X-API-Login":login,

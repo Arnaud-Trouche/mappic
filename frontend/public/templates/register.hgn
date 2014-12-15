@@ -1,13 +1,8 @@
 <div id="content" class="croppedcropped">
-	<h1> Register [CLOSED]</h1>
-
-	<p> 
-		You can't register for the moment. <br/>
-		We are hoping to see you again soon when the site will open fully :)
-	</p>
+	<h1> Register</h1>
 	
 	<form id="register" class="form">
-		<label>Pseudo</label>
+		<label>Username</label>
 		<input type="text" name="name" id="name" /><br/>
 
 		<label>Email</label>

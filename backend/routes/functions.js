@@ -10,7 +10,7 @@ module.exports = {
 		ts=req.get("X-API-Time");
 		hash=req.get("X-API-Hash");
 		result = crypto.createHmac('sha1', pwd).update(ts).digest('hex');
-		if (hash == result && Date.now() - ts <= 30000) {
+		if (hash == result && Date.now() - ts <= 60000) {
 			return true;
 		} else {
 			return false;

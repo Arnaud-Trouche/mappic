@@ -283,8 +283,7 @@ function profile(){
 
 function API(url,method,data,callback,progressCB) {
     if (user.logged != true) {
-        alert("Not connected ?");
-        location="/";
+        openDialog('Not connected ?', '<p>It seems like you are trying to access something you\'re not supposed to. Please login.</p>', 'OK', function(){link('login');})
         return;
     }
 
@@ -313,7 +312,7 @@ function API(url,method,data,callback,progressCB) {
     },
 }).done(function(ret) {
     if (ret.success == false) {
-        alert("API error");
+        openDialog('An error occured', '<p>There was a problem while communicating with the server. Please try again.</p>', 'Try again', function(){})
         return;
     }
 

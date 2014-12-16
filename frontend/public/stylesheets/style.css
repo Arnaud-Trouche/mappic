@@ -419,11 +419,11 @@ div#tip button:active{background: rgba(153,153,153,0.4);}
 	max-width: 600px;
 	max-height: 500px;
 }
-/*.mapImg {
+.mapImg {
 	cursor: pointer;
 }
-.mapImg:hover img{opacity: 0.65;}
-.mapImg:hover .openNewTab{display: inline;}*/
+/*.mapImg:hover img{opacity: 0.65;}*/
+/*.mapImg:hover .openNewTab{display: inline;}*/
 .mapImg .deleteCross{
 	top: 30px;
 	right: 30px;

@@ -1,7 +1,9 @@
 <div class="menubutton">
 	<div class="button_icon" id="open_menu"><img src="images/ic_menu_black_48dp.png" alt="menu"/></div>
 	{{#snd_bttn}}
+	{{#logged}}
 	<div class="button_raised link" onclick="link('upload');">Upload</div>
+	{{/logged}}
 	{{/snd_bttn}}
 </div>
 <h1 class="link" id="home" onclick="link('home');">mappic</h1>

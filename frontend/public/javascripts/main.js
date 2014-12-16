@@ -183,16 +183,13 @@ function openDialog(title,message,validation,clbck){
 
     $("#dialog p").html(message);
     $("#dialog #dialogSubmit").html(validation);
-    $("#dialog_container").css({
-        display: 'flex',
-        opacity: '0'
-    });
+    $("#dialog_container").addClass('flex');
     $("#dialog_container").animate({opacity:1}, 'fast');
 }
 
 function closeDialog(){
     $("#dialog_container").animate({opacity: 0}, 'fast', function(){
-        $("#dialog_container").css('display', 'none');    
+        $("#dialog_container").removeClass('flex');    
         callback();
         callback = function(){}; //if the function is called a second time, not 2 callbacks    
     });

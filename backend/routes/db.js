@@ -12,11 +12,11 @@ var pictureSchema = new mongoose.Schema({
 });
 
 var userSchema = new mongoose.Schema({
-  login : String,
-  passwordHash : String,
-  mail : String,
-  pictures : [ pictureSchema ],
-  loginToken: String,
+	login : String,
+	passwordHash : String,
+	mail : String,
+	pictures : [ pictureSchema ],
+	loginToken: String,
 });
 
 var User = mongoose.model('users', userSchema);

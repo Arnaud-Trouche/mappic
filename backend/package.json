@@ -1,0 +1,12 @@
+{
+	"name": "mappic_backend",
+	"version": "0.0.0",
+	"dependencies": {
+		"express": "~4.9.0",
+		"connect-busboy": "~0.0.2",
+		"json": "~9.0.2",
+		"body-parser": "~1.9.2",
+		"gm": "~1.17.0",
+		"mongoose": "~3.8.19"
+	}
+}

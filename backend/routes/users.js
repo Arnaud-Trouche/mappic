@@ -23,22 +23,22 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
 	login=req.body.login
-	db.User.findOne({login:login}, function(err,ret) {
-		if (ret) {
-			return res.send({success:false});
-		} else {
-			
-			user = new db.User({
-				login: login,
-				passwordHash: req.body.passwordHash,
-				mail: req.body.mail,
-			});
+		db.User.findOne({login:login}, function(err,ret) {
+			if (ret) {
+				return res.send({success:false});
+			} else {
 
-			user.save();
-			
-			return res.send({success:true});
-		}
-	});
+				user = new db.User({
+					login: login,
+					passwordHash: req.body.passwordHash,
+					mail: req.body.mail,
+				});
+
+				user.save();
+
+				return res.send({success:true});
+			}
+		});
 
 });
 

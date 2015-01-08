@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var db = require('./db.js');
 
 module.exports = {
-	
+
 	isHashValid: function(req,user) {
 		pwd=String(user.passwordHash);
 		ts=req.get("X-API-Time");
@@ -16,7 +16,7 @@ module.exports = {
 			return false;
 		}
 	},
-	
+
 	checkUserExists: function(login) {
 		db.find({login:login}, function(err,res) {
 			console.log(res.length);
@@ -27,7 +27,7 @@ module.exports = {
 			}
 		});
 	},
-	
+
 	checkAuth: function (login, rnd, hash) {
 		// Key is the randomly generated
 		// Hash is the result of the password (previously hashed) and the key
@@ -45,7 +45,7 @@ module.exports = {
 			return false;
 		}
 	},
-	
+
 	getUser: function(login) {
 		user = require("../data/"+login+"/profile.json");
 		return user;

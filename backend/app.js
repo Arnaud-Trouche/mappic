@@ -1,27 +1,27 @@
 var fs = require('fs');
-var express = require('express')
+	var express = require('express')
 var app = express()
-var bodyParser = require('body-parser')
-var busboy = require('connect-busboy');
-var mongoose = require('mongoose');
+	var bodyParser = require('body-parser')
+	var busboy = require('connect-busboy');
+	var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mappic', function(err) {
-  if (err) { throw err; }
-});
+	mongoose.connect('mongodb://localhost/mappic', function(err) {
+			if (err) { throw err; }
+			});
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE");
-  res.header("Access-Control-Allow-Headers", "X-API-Login,X-API-Hash,X-API-Time");
-  next();
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET,POST,DELETE");
+	res.header("Access-Control-Allow-Headers", "X-API-Login,X-API-Hash,X-API-Time");
+	next();
 });
 
 app.use(bodyParser.json({
 	limit:'50mb'
 }));
 app.use(bodyParser.urlencoded({
-  extended: true,
-  limit:'50mb'
+	extended: true,
+	limit:'50mb'
 })); 
 app.use(bodyParser.json());
 app.use(busboy()); // File uploads
